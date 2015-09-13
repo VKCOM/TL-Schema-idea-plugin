@@ -18,12 +18,12 @@
 
 <idea-plugin version="2">
   <id>net.pavelk.tlschema.colorer</id>
-  <name>TL Schema colorer</name>
+  <name>TL Schema support</name>
   <version>1.0</version>
   <vendor email="kunyavskiy@gmail.com">Pavel Kunyavskiy</vendor>
 
 
-  <description>Supports coloring of TL shema files</description>
+  <description>Supports TL schema files coloring and several inspections</description>
 
   <change-notes>
   </change-notes>
