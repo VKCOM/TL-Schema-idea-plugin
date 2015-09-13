@@ -1,0 +1,61 @@
+<!--
+  ~ Copyright (C) 2015 Pavel Kunyavskiy
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU General Public License as published by
+  ~     the Free Software Foundation, either version 3 of the License, or
+  ~     (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License
+  ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  ~
+  -->
+
+<idea-plugin version="2">
+  <id>net.pavelk.tlschema.colorer</id>
+  <name>TL Schema colorer</name>
+  <version>1.0</version>
+  <vendor email="kunyavskiy@gmail.com">Pavel Kunyavskiy</vendor>
+
+
+  <description>Supports coloring of TL shema files</description>
+
+  <change-notes>
+  </change-notes>
+
+  <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Build+Number+Ranges for description -->
+  <idea-version since-build="131"/>
+
+  <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
+       on how to target different products -->
+  <depends>com.intellij.modules.lang</depends>
+
+
+
+  <extensions defaultExtensionNs="com.intellij">
+    <fileTypeFactory implementation="net.pavelk.tlschema.TLSchemaFileTypeFactory"/>
+    <lang.parserDefinition language="TLSchema" implementationClass="net.pavelk.tlschema.TLSchemaParserDefinition"/>
+    <lang.syntaxHighlighterFactory key="TLSchema" implementationClass="net.pavelk.tlschema.TLSchemaSyntaxHighlighterFactory"/>
+    <annotator language="TLSchema" implementationClass="net.pavelk.tlschema.TLSchemaAnnotator"/>
+    <colorSettingsPage implementation="net.pavelk.tlschema.TLSchemaColorSettingsPage"/>
+    <!-- Add your extensions here -->
+  </extensions>
+
+  <application-components>
+    <!-- Add your application components here -->
+  </application-components>
+
+  <project-components>
+    <!-- Add your project components here -->
+  </project-components>
+
+  <actions>
+    <!-- Add your actions here -->
+  </actions>
+
+</idea-plugin>

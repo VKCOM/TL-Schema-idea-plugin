@@ -1,0 +1,65 @@
+{
+  parserClass="net.pavelk.tlschema.parser.TLSchemaParser"
+
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="TLSchema"
+  psiImplClassSuffix="Impl"
+  psiPackage="net.pavelk.tlschema.psi"
+  psiImplPackage="net.pavelk.tlschema.psi.impl"
+
+  elementTypeHolderClass="net.pavelk.tlschema.psi.TLSchemaTypes"
+  elementTypeClass="net.pavelk.tlschema.psi.TLSchemaElementType"
+  tokenTypeClass="net.pavelk.tlschema.psi.TLSchemaTokenType"
+
+  psiImplUtilClass="net.pavelk.tlschema.psi.impl.TLSchemaPsiImplUtil"
+}
+
+
+TLShemaFile ::= constructor_declarations [ ((TRIPPLE_MINUS FUNCTIONS_KW TRIPPLE_MINUS fun_declarations) | (TRIPPLE_MINUS TYPES_KW TRIPPLE_MINUS constructor_declarations)) *]
+
+comment_node ::= COMMENT
+
+namespace_ident ::= LC_IDENT
+lc_ident_ns ::= [ namespace_ident DOT ] LC_IDENT {methods=[getDeclaration]}
+uc_ident_ns ::= [ namespace_ident DOT ] UC_IDENT
+lc_ident_full ::= lc_ident_ns [ SHARP_HEX_NUMBER ] {methods=[getDeclaration]}
+
+constructor_declarations ::= [ declaration * ]
+fun_declarations ::= [ declaration  * ]
+
+declaration ::= combinator_decl | combinator_decl_builtin {methods=[getCombinator getResultType getNumVars getTypeVars haveConditionalArgs]}
+
+combinator_decl_builtin ::= combinator_decl_builtin_type | combinator_decl_builtin_false;
+
+combinator_decl_builtin_type ::= full_combinator_id QMARK EQMARK result_type SEMICOLON
+combinator_decl_builtin_false ::= EMPTY_KW result_type SEMICOLON
+
+type_expr ::= type_term [ type_term * ]
+expr ::= term [ term * ]
+term ::= BROPEN expr BRCLOSE | type_with_triangle_braces | type_ident | var_ident | nat_expr | percent_term
+nat_expr ::= nat_expr_term [ ( PLUS nat_expr_term) *]
+nat_expr_term ::= nat_const_term | BROPEN nat_expr BRCLOSE | var_ident
+nat_const_term ::= NAT_CONST
+type_with_triangle_braces ::= type_ident LEQ type_expr [ (COMA type_expr) * ] GEQ
+percent_term ::= PERCENT term
+type_ident ::= boxed_type_ident | lc_ident_ns | SHARP
+boxed_type_ident ::= uc_ident_ns
+var_ident ::= LC_IDENT | UC_IDENT
+type_term ::= term
+nat_term ::= nat_expr
+
+combinator_decl ::= full_combinator_id [ opt_arg* ] [ arg* ] EQMARK result_type SEMICOLON
+full_combinator_id ::= lc_ident_full | UNDERSCORE
+opt_arg ::= CRBROPEN var_ident [ var_ident* ] COLON [ EXCMARK ] type_expr CRBRCLOSE
+arg ::= arg_array | arg_named | arg_unnamed
+arg_array ::= [ var_ident_opt COLON ] [ multiplicity ASTERISK ] SQBROPEN [ arg *] SQBRCLOSE;
+arg_named ::= ( var_ident_opt COLON [ conditional_def ] type_term_exc )
+arg_unnamed ::=  type_term_exc
+
+type_term_exc ::= type_term | EXCMARK type_term
+
+multiplicity ::= nat_term
+var_ident_opt ::= var_ident | UNDERSCORE
+conditional_def ::= var_ident [ DOT NAT_CONST ] QMARK
+result_type ::= (boxed_type_ident LEQ type_expr [ (COMA type_expr ) * ] GEQ) | (boxed_type_ident [type_expr])
