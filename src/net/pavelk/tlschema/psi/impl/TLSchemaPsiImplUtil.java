@@ -112,7 +112,7 @@ public class TLSchemaPsiImplUtil {
         if (decl == null) throw new AssertionError();
         List<TLSchemaOptArg> opts = decl.getOptArgList();
         for (TLSchemaOptArg arg : opts) {
-            if (arg.getTypeExpr().getText().equals("BoxedType")) {
+            if (arg.getTypeExpr().getText().equals("Type")) {
                 if (result == null) {
                     result = new ArrayList<>();
                 }
