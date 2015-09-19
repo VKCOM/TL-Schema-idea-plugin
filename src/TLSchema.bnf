@@ -25,10 +25,10 @@ lc_ident_ns ::= [ namespace_ident DOT ] LC_IDENT {methods=[getDeclaration]}
 uc_ident_ns ::= [ namespace_ident DOT ] UC_IDENT
 lc_ident_full ::= lc_ident_ns [ SHARP_HEX_NUMBER ] {methods=[getDeclaration]}
 
-constructor_declarations ::= [ declaration * ]
-fun_declarations ::= [ declaration  * ]
+constructor_declarations ::= [ declaration * ] {methods=[getNamespaces]}
+fun_declarations ::= [ declaration  * ] {methods=[getNamespaces]}
 
-declaration ::= combinator_decl | combinator_decl_builtin {methods=[getCombinator getResultType getNumVars getTypeVars haveConditionalArgs]}
+declaration ::= combinator_decl | combinator_decl_builtin {methods=[getCombinator getResultType getNumVars getTypeVars haveConditionalArgs getNamespace]}
 
 combinator_decl_builtin ::= combinator_decl_builtin_type | combinator_decl_builtin_false;
 
@@ -62,4 +62,4 @@ type_term_exc ::= type_term | EXCMARK type_term
 multiplicity ::= nat_term
 var_ident_opt ::= var_ident | UNDERSCORE
 conditional_def ::= var_ident [ DOT NAT_CONST ] QMARK
-result_type ::= (boxed_type_ident LEQ type_expr [ (COMA type_expr ) * ] GEQ) | (boxed_type_ident [type_expr])
+result_type ::= (boxed_type_ident LEQ type_expr [ (COMA type_expr ) * ] GEQ) | (boxed_type_ident [type_expr]) {methods=[getDeclaration]}

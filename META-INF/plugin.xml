@@ -19,7 +19,7 @@
 <idea-plugin version="2">
   <id>net.pavelk.tlschema.colorer</id>
   <name>TL Schema support</name>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
   <vendor email="kunyavskiy@gmail.com">Pavel Kunyavskiy</vendor>
 
 
@@ -44,6 +44,7 @@
     <lang.syntaxHighlighterFactory key="TLSchema" implementationClass="net.pavelk.tlschema.TLSchemaSyntaxHighlighterFactory"/>
     <annotator language="TLSchema" implementationClass="net.pavelk.tlschema.TLSchemaAnnotator"/>
     <colorSettingsPage implementation="net.pavelk.tlschema.TLSchemaColorSettingsPage"/>
+    <lang.psiStructureViewFactory language="TLSchema" implementationClass="net.pavelk.tlschema.TLSchemaStructureViewFactory"/>
     <!-- Add your extensions here -->
   </extensions>
 

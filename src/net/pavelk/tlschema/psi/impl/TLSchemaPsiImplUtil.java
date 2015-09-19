@@ -19,12 +19,14 @@
 package net.pavelk.tlschema.psi.impl;
 
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
 import com.intellij.psi.util.PsiTreeUtil;
 import net.pavelk.tlschema.psi.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class TLSchemaPsiImplUtil {
     public static TLSchemaLcIdentNs getCombinator(TLSchemaDeclaration decl) {
@@ -146,6 +148,22 @@ public class TLSchemaPsiImplUtil {
 
     public static TLSchemaDeclaration getDeclaration(@NotNull PsiElement element) {
         return PsiTreeUtil.getParentOfType(element, TLSchemaDeclaration.class);
+    }
+
+    public static String getNamespace(TLSchemaDeclaration decl) {
+        TLSchemaLcIdentNs ident = decl.getCombinator();
+        if (ident != null && ident.getNamespaceIdent() != null)
+            return ident.getNamespaceIdent().getText();
+        return "common";
+    }
+
+    public static void getNamespaces(@NotNull TLSchemaFunDeclarations decls, Set<String> result) {
+        for (TLSchemaDeclaration decl : decls.getDeclarationList())
+            result.add(decl.getNamespace());
+    }
+    public static void getNamespaces(@NotNull TLSchemaConstructorDeclarations decls, Set<String> result) {
+        for (TLSchemaDeclaration decl : decls.getDeclarationList())
+            result.add(decl.getNamespace());
     }
 
 }
