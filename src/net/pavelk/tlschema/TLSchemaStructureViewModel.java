@@ -34,7 +34,7 @@ public class TLSchemaStructureViewModel extends StructureViewModelBase implement
 
     @NotNull
     public Sorter[] getSorters() {
-        return new Sorter[] {Sorter.ALPHA_SORTER};
+        return new Sorter[]{Sorter.ALPHA_SORTER};
     }
 
 

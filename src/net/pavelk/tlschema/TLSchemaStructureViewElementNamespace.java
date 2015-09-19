@@ -30,15 +30,13 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class TLSchemaStructureViewElementNamespace implements StructureViewTreeElement, SortableTreeElement {
     String namespace;
     boolean isTypeNode;
     TLSchemaFile file;
+
     public TLSchemaStructureViewElementNamespace(TLSchemaFile file, String namespace, boolean isTypeNode) {
         this.namespace = namespace;
         this.file = file;
@@ -51,7 +49,8 @@ public class TLSchemaStructureViewElementNamespace implements StructureViewTreeE
     }
 
     @Override
-    public void navigate(boolean b) {}
+    public void navigate(boolean b) {
+    }
 
     @Override
     public boolean canNavigate() {
@@ -125,6 +124,31 @@ public class TLSchemaStructureViewElementNamespace implements StructureViewTreeE
                 }
             }
         }
-        return result.toArray(new TreeElement[result.size()]);
+        TreeElement[] resultArray = result.toArray(new TreeElement[result.size()]);
+        Arrays.sort(resultArray, new Comparator<Object>() {
+
+            int getObjectClass(Object o) {
+                if (o instanceof TLSchemaStructureViewElementType) return 0;
+                if (o instanceof TLSchemaStructureViewElementNamespace) return 1;
+                if (o instanceof TLSchemaStructureViewElementFunction) return 2;
+                throw new AssertionError();
+            }
+
+            @Override
+            public int compare(Object o1, Object o2) {
+                int class1 = getObjectClass(o1);
+                int class2 = getObjectClass(o2);
+                if (class1 != class2) {
+                    return class1 - class2;
+                }
+                String text1 = ((StructureViewTreeElement) o1).getPresentation().getPresentableText();
+                String text2 = ((StructureViewTreeElement) o2).getPresentation().getPresentableText();
+                if (text1 == null && text2 == null) return 0;
+                if (text1 == null) return -1;
+                if (text2 == null) return 1;
+                return text1.compareTo(text2);
+            }
+        });
+        return resultArray;
     }
 }

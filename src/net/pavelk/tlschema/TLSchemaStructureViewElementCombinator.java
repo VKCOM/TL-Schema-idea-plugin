@@ -23,8 +23,6 @@ import com.intellij.ide.util.treeView.smartTree.SortableTreeElement;
 import com.intellij.ide.util.treeView.smartTree.TreeElement;
 import com.intellij.navigation.ItemPresentation;
 import com.intellij.navigation.NavigationItem;
-import net.pavelk.tlschema.psi.TLSchemaCombinatorDeclBuiltin;
-import net.pavelk.tlschema.psi.TLSchemaDeclaration;
 import net.pavelk.tlschema.psi.TLSchemaLcIdentNs;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -33,6 +31,7 @@ import javax.swing.*;
 
 public class TLSchemaStructureViewElementCombinator implements StructureViewTreeElement, SortableTreeElement {
     TLSchemaLcIdentNs ident;
+
     public TLSchemaStructureViewElementCombinator(TLSchemaLcIdentNs ident) {
         this.ident = ident;
     }
@@ -48,7 +47,7 @@ public class TLSchemaStructureViewElementCombinator implements StructureViewTree
 
     @Override
     public void navigate(boolean requestFocus) {
-        ((NavigationItem)ident).navigate(requestFocus);
+        ((NavigationItem) ident).navigate(requestFocus);
     }
 
     @Override

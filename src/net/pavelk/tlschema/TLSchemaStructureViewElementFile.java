@@ -28,6 +28,7 @@ import net.pavelk.tlschema.psi.TLSchemaFile;
 import net.pavelk.tlschema.psi.TLSchemaFunDeclarations;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
 import java.util.HashSet;
 
 public class TLSchemaStructureViewElementFile implements StructureViewTreeElement, SortableTreeElement {
@@ -84,9 +85,10 @@ public class TLSchemaStructureViewElementFile implements StructureViewTreeElemen
             declarations.getNamespaces(set);
         }
         String[] namespaces = set.toArray(new String[set.size()]);
+        Arrays.sort(namespaces);
         TreeElement[] result = new TreeElement[namespaces.length];
         for (int i = 0; i < namespaces.length; i++)
-        result[i] = new TLSchemaStructureViewElementNamespace(element, namespaces[i], false);
+            result[i] = new TLSchemaStructureViewElementNamespace(element, namespaces[i], false);
         return result;
     }
 }

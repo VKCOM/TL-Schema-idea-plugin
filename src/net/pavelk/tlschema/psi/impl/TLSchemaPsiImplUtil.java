@@ -19,7 +19,6 @@
 package net.pavelk.tlschema.psi.impl;
 
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
 import com.intellij.psi.util.PsiTreeUtil;
 import net.pavelk.tlschema.psi.*;
 import org.jetbrains.annotations.NotNull;
@@ -161,6 +160,7 @@ public class TLSchemaPsiImplUtil {
         for (TLSchemaDeclaration decl : decls.getDeclarationList())
             result.add(decl.getNamespace());
     }
+
     public static void getNamespaces(@NotNull TLSchemaConstructorDeclarations decls, Set<String> result) {
         for (TLSchemaDeclaration decl : decls.getDeclarationList())
             result.add(decl.getNamespace());

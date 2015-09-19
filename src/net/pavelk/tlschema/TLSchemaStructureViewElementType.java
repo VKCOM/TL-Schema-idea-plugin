@@ -24,12 +24,15 @@ import com.intellij.ide.util.treeView.smartTree.TreeElement;
 import com.intellij.navigation.ItemPresentation;
 import com.intellij.navigation.NavigationItem;
 import com.intellij.openapi.project.Project;
-import net.pavelk.tlschema.psi.*;
+import net.pavelk.tlschema.psi.TLSchemaLcIdentNs;
+import net.pavelk.tlschema.psi.TLSchemaResultType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public class TLSchemaStructureViewElementType implements StructureViewTreeElement, SortableTreeElement {
@@ -46,6 +49,12 @@ public class TLSchemaStructureViewElementType implements StructureViewTreeElemen
             }
         }
         this.combinators = combinators.toArray(new TLSchemaLcIdentNs[combinators.size()]);
+        Arrays.sort(this.combinators, new Comparator<TLSchemaLcIdentNs>() {
+            @Override
+            public int compare(TLSchemaLcIdentNs o1, TLSchemaLcIdentNs o2) {
+                return o1.getText().compareTo(o2.getText());
+            }
+        });
     }
 
     @Override
@@ -56,7 +65,7 @@ public class TLSchemaStructureViewElementType implements StructureViewTreeElemen
     @Override
     public void navigate(boolean requestFocus) {
         if (combinators.length != 1) throw new AssertionError();
-        ((NavigationItem)combinators[0]).navigate(requestFocus);
+        ((NavigationItem) combinators[0]).navigate(requestFocus);
     }
 
     @Override
