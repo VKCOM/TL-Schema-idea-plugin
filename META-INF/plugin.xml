@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright (C) 2015 Pavel Kunyavskiy
+  ~ Copyright (C) 2016 Pavel Kunyavskiy
   ~
   ~     This program is free software: you can redistribute it and/or modify
   ~     it under the terms of the GNU General Public License as published by
@@ -46,6 +46,7 @@
     <annotator language="TLSchema" implementationClass="net.pavelk.tlschema.TLSchemaAnnotator"/>
     <colorSettingsPage implementation="net.pavelk.tlschema.TLSchemaColorSettingsPage"/>
     <lang.psiStructureViewFactory language="TLSchema" implementationClass="net.pavelk.tlschema.TLSchemaStructureViewFactory"/>
+    <lang.commenter language="TLSchema" implementationClass="net.pavelk.tlschema.TLSchemaCommenter"/>
     <!-- Add your extensions here -->
   </extensions>
 
