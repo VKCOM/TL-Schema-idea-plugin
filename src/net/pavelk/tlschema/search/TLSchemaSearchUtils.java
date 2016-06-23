@@ -183,6 +183,11 @@ public class TLSchemaSearchUtils {
             }
 
             @Override
+            public void visitResultType(@NotNull TLSchemaResultType o) {
+                // ignore subtree
+            }
+
+            @Override
             public void visitVarIdent(@NotNull TLSchemaVarIdent o) {
                 result.add(o);
             }

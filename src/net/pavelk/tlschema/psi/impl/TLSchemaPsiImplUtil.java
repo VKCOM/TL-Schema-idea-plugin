@@ -215,10 +215,7 @@ public class TLSchemaPsiImplUtil {
 
     public static PsiReference getReference(PsiElement element) {
         PsiReference[] references = getReferences(element);
-        if (references.length >= 1) {
-            return references[0];
-        }
-        return null;
+        return references.length == 1 ? references[0] : null;
     }
 
     public static ItemPresentation getPresentation(final TLSchemaVarIdent element) {
