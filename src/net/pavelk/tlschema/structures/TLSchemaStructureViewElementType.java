@@ -16,7 +16,7 @@
  *
  */
 
-package net.pavelk.tlschema;
+package net.pavelk.tlschema.structures;
 
 import com.intellij.ide.structureView.StructureViewTreeElement;
 import com.intellij.ide.util.treeView.smartTree.SortableTreeElement;
@@ -26,6 +26,7 @@ import com.intellij.navigation.NavigationItem;
 import com.intellij.openapi.project.Project;
 import net.pavelk.tlschema.psi.TLSchemaLcIdentNs;
 import net.pavelk.tlschema.psi.TLSchemaResultType;
+import net.pavelk.tlschema.search.TLSchemaSearchUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -41,7 +42,7 @@ public class TLSchemaStructureViewElementType implements StructureViewTreeElemen
 
     public TLSchemaStructureViewElementType(Project project, String type) {
         this.type = type;
-        List<TLSchemaResultType> decls = TLSchemaUtils.findType(project, type);
+        List<TLSchemaResultType> decls = TLSchemaSearchUtils.findType(project, type);
         List<TLSchemaLcIdentNs> combinators = new ArrayList<>();
         for (TLSchemaResultType decl : decls) {
             if (decl.getDeclaration().getCombinator() != null) {

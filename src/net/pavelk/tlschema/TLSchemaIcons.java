@@ -22,6 +22,6 @@ import com.intellij.openapi.util.IconLoader;
 
 import javax.swing.*;
 
-class TLSchemaIcons {
+public class TLSchemaIcons {
     public static final Icon FILE = IconLoader.getIcon("/net/pavelk/tlschema/icons/TL.png");
 }

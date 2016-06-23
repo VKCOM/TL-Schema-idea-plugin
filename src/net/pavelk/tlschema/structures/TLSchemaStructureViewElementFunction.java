@@ -16,7 +16,7 @@
  *
  */
 
-package net.pavelk.tlschema;
+package net.pavelk.tlschema.structures;
 
 import com.intellij.ide.structureView.StructureViewTreeElement;
 import com.intellij.ide.util.treeView.smartTree.SortableTreeElement;

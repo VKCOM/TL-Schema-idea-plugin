@@ -16,7 +16,7 @@
  *
  */
 
-package net.pavelk.tlschema;
+package net.pavelk.tlschema.highlighting;
 
 import com.intellij.openapi.fileTypes.SyntaxHighlighter;
 import com.intellij.openapi.fileTypes.SyntaxHighlighterFactory;

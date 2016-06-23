@@ -16,7 +16,7 @@
  *
  */
 
-package net.pavelk.tlschema;
+package net.pavelk.tlschema.highlighting;
 
 import com.intellij.lang.annotation.Annotation;
 import com.intellij.lang.annotation.AnnotationHolder;
@@ -26,6 +26,7 @@ import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import net.pavelk.tlschema.psi.*;
 import net.pavelk.tlschema.psi.impl.*;
+import net.pavelk.tlschema.search.TLSchemaSearchUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -128,12 +129,12 @@ public class TLSchemaAnnotator implements Annotator {
         String type = ident.getText();
         TextRange range = ident.getTextRange();
         boolean bare = false;
-        TLSchemaLcIdentNs combinator = TLSchemaUtils.findCombinator(ident.getProject(), type);
+        TLSchemaLcIdentNs combinator = TLSchemaSearchUtils.findCombinator(ident.getProject(), type);
         if (combinator != null) {
             bare = true;
             type = combinator.getDeclaration().getResultType().getBoxedTypeIdent().getText();
         }
-        int count = TLSchemaUtils.findType(ident.getProject(), type).size();
+        int count = TLSchemaSearchUtils.findType(ident.getProject(), type).size();
         TLSchemaDeclaration decl = TLSchemaPsiImplUtil.getDeclaration(ident);
         if (decl == null) throw new AssertionError();
         List<TLSchemaVarIdent> numVars = decl.getNumVars();

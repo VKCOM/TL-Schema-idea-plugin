@@ -18,11 +18,19 @@
 
 package net.pavelk.tlschema.psi.impl;
 
+import com.intellij.lang.ASTNode;
+import com.intellij.navigation.ItemPresentation;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiReference;
+import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry;
 import com.intellij.psi.util.PsiTreeUtil;
+import net.pavelk.tlschema.TLSchemaIcons;
 import net.pavelk.tlschema.psi.*;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -166,4 +174,119 @@ public class TLSchemaPsiImplUtil {
             result.add(decl.getNamespace());
     }
 
+    public static String getName(TLSchemaVarIdent ident) {
+        return ident.getText();
+    }
+
+    public static PsiElement setName(TLSchemaVarIdent ident, @NotNull String newName) {
+        ASTNode curNode = ident.getNode();
+        TLSchemaVarIdent newIdent = TLSchemaElementFactory.createVarIdent(ident.getProject(), newName);
+        curNode.getTreeParent().replaceChild(curNode, newIdent.getNode());
+        return newIdent;
+    }
+
+    public static String getName(TLSchemaUcIdentNs ident) {
+        return ident.getText();
+    }
+
+    public static PsiElement setName(TLSchemaUcIdentNs ident, @NotNull String newName) {
+        ASTNode curNode = ident.getNode();
+        TLSchemaUcIdentNs newIdent = TLSchemaElementFactory.createUcIdentNs(ident.getProject(), newName);
+        curNode.getTreeParent().replaceChild(curNode, newIdent.getNode());
+        return newIdent;
+    }
+
+    public static String getName(TLSchemaLcIdentNs ident) {
+        return ident.getText();
+    }
+
+    public static PsiElement setName(TLSchemaLcIdentNs ident, @NotNull String newName) {
+        ASTNode curNode = ident.getNode();
+        TLSchemaLcIdentNs newIdent = TLSchemaElementFactory.createLcIdentNs(ident.getProject(), newName);
+        curNode.getTreeParent().replaceChild(curNode, newIdent.getNode());
+        return newIdent;
+
+    }
+
+    @NotNull
+    public static PsiReference[] getReferences(PsiElement element) {
+        return ReferenceProvidersRegistry.getReferencesFromProviders(element);
+    }
+
+    public static PsiReference getReference(PsiElement element) {
+        PsiReference[] references = getReferences(element);
+        if (references.length >= 1) {
+            return references[0];
+        }
+        return null;
+    }
+
+    public static ItemPresentation getPresentation(final TLSchemaVarIdent element) {
+        return new ItemPresentation() {
+            @Nullable
+            @Override
+            public String getPresentableText() {
+                return element.getName();
+            }
+
+            @Nullable
+            @Override
+            public String getLocationString() {
+                PsiFile containingFile = element.getContainingFile();
+                return containingFile == null ? null : containingFile.getName();
+            }
+
+            @Nullable
+            @Override
+            public Icon getIcon(boolean unused) {
+                return TLSchemaIcons.FILE;
+            }
+        };
+    }
+
+    public static ItemPresentation getPresentation(final TLSchemaUcIdentNs element) {
+        return new ItemPresentation() {
+            @Nullable
+            @Override
+            public String getPresentableText() {
+                return element.getDeclaration().getCombinator().getText() + " ... = " + element.getName();
+            }
+
+            @Nullable
+            @Override
+            public String getLocationString() {
+                PsiFile containingFile = element.getContainingFile();
+                return containingFile == null ? null : containingFile.getName();
+            }
+
+            @Nullable
+            @Override
+            public Icon getIcon(boolean unused) {
+                return TLSchemaIcons.FILE;
+            }
+        };
+    }
+
+    public static ItemPresentation getPresentation(final TLSchemaLcIdentNs element) {
+        return new ItemPresentation() {
+            @Nullable
+            @Override
+            public String getPresentableText() {
+                return element.getName();
+            }
+
+            @Nullable
+            @Override
+            public String getLocationString() {
+                PsiFile containingFile = element.getContainingFile();
+                return containingFile == null ? null : containingFile.getName();
+            }
+
+            @Nullable
+            @Override
+            public Icon getIcon(boolean unused) {
+                return TLSchemaIcons.FILE;
+            }
+        };
+    }
 }

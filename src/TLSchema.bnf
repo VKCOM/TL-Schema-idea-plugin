@@ -20,9 +20,18 @@ TLShemaFile ::= constructor_declarations [ ((TRIPPLE_MINUS FUNCTIONS_KW TRIPPLE_
 
 comment_node ::= COMMENT
 
+uc_ident_node ::= UC_IDENT
+lc_ident_node ::= LC_IDENT
+
 namespace_ident ::= LC_IDENT
-lc_ident_ns ::= [ namespace_ident DOT ] LC_IDENT {methods=[getDeclaration]}
-uc_ident_ns ::= [ namespace_ident DOT ] UC_IDENT
+lc_ident_ns ::= [ namespace_ident DOT ] lc_ident_node {
+                                                       mixin="net.pavelk.tlschema.psi.impl.TLSchemaNamedElementImpl"
+                                                       implements="net.pavelk.tlschema.psi.TLSchemaNamedElement"
+                                                       methods=[getName setName getReference getReferences getPresentation getDeclaration]}
+uc_ident_ns ::= [ namespace_ident DOT ] uc_ident_node {
+                                                       mixin="net.pavelk.tlschema.psi.impl.TLSchemaNamedElementImpl"
+                                                       implements="net.pavelk.tlschema.psi.TLSchemaNamedElement"
+                                                       methods=[getName setName getReference getReferences getPresentation getDeclaration]}
 lc_ident_full ::= lc_ident_ns [ SHARP_HEX_NUMBER ] {methods=[getDeclaration]}
 
 constructor_declarations ::= [ declaration * ] {methods=[getNamespaces]}
@@ -45,7 +54,10 @@ type_with_triangle_braces ::= type_ident LEQ type_expr [ (COMA type_expr) * ] GE
 percent_term ::= PERCENT term
 type_ident ::= boxed_type_ident | lc_ident_ns | SHARP
 boxed_type_ident ::= uc_ident_ns
-var_ident ::= LC_IDENT | UC_IDENT
+var_ident ::= lc_ident_node | uc_ident_node {
+                                             mixin="net.pavelk.tlschema.psi.impl.TLSchemaNamedElementImpl"
+                                             implements="net.pavelk.tlschema.psi.TLSchemaNamedElement"
+                                             methods=[getName setName getReference getReferences getPresentation getDeclaration]}
 type_term ::= term
 nat_term ::= nat_expr
 

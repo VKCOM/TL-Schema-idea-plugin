@@ -42,11 +42,15 @@
   <extensions defaultExtensionNs="com.intellij">
     <fileTypeFactory implementation="net.pavelk.tlschema.TLSchemaFileTypeFactory"/>
     <lang.parserDefinition language="TLSchema" implementationClass="net.pavelk.tlschema.TLSchemaParserDefinition"/>
-    <lang.syntaxHighlighterFactory key="TLSchema" implementationClass="net.pavelk.tlschema.TLSchemaSyntaxHighlighterFactory"/>
-    <annotator language="TLSchema" implementationClass="net.pavelk.tlschema.TLSchemaAnnotator"/>
-    <colorSettingsPage implementation="net.pavelk.tlschema.TLSchemaColorSettingsPage"/>
-    <lang.psiStructureViewFactory language="TLSchema" implementationClass="net.pavelk.tlschema.TLSchemaStructureViewFactory"/>
+    <lang.syntaxHighlighterFactory key="TLSchema" implementationClass="net.pavelk.tlschema.highlighting.TLSchemaSyntaxHighlighterFactory"/>
+    <annotator language="TLSchema" implementationClass="net.pavelk.tlschema.highlighting.TLSchemaAnnotator"/>
+    <colorSettingsPage implementation="net.pavelk.tlschema.highlighting.TLSchemaColorSettingsPage"/>
+    <lang.psiStructureViewFactory language="TLSchema" implementationClass="net.pavelk.tlschema.structures.TLSchemaStructureViewFactory"/>
     <lang.commenter language="TLSchema" implementationClass="net.pavelk.tlschema.TLSchemaCommenter"/>
+    <psi.referenceContributor implementation="net.pavelk.tlschema.references.TLSchemaReferenceContributor"/>
+    <lang.findUsagesProvider language="TLSchema" implementationClass="net.pavelk.tlschema.search.TLSchemaFindUsagesProvider"/>
+    <lang.namesValidator language="TLSchema" implementationClass="net.pavelk.tlschema.psi.TLSchemaNamesValidator"/>
+    <gotoSymbolContributor implementation="net.pavelk.tlschema.search.TLSchemaChooseByNameContributor"/>
     <!-- Add your extensions here -->
   </extensions>
 

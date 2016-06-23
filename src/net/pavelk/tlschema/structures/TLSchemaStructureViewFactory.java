@@ -16,35 +16,27 @@
  *
  */
 
-package net.pavelk.tlschema;
+package net.pavelk.tlschema.structures;
 
+import com.intellij.ide.structureView.StructureViewBuilder;
 import com.intellij.ide.structureView.StructureViewModel;
-import com.intellij.ide.structureView.StructureViewModelBase;
-import com.intellij.ide.structureView.StructureViewTreeElement;
-import com.intellij.ide.util.treeView.smartTree.Sorter;
+import com.intellij.ide.structureView.TreeBasedStructureViewBuilder;
+import com.intellij.lang.PsiStructureViewFactory;
+import com.intellij.openapi.editor.Editor;
 import com.intellij.psi.PsiFile;
-import net.pavelk.tlschema.psi.TLSchemaFile;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-public class TLSchemaStructureViewModel extends StructureViewModelBase implements
-        StructureViewModel.ElementInfoProvider {
-    public TLSchemaStructureViewModel(PsiFile psiFile) {
-        super(psiFile, new TLSchemaStructureViewElementFile(psiFile));
-    }
-
-    @NotNull
-    public Sorter[] getSorters() {
-        return new Sorter[]{Sorter.ALPHA_SORTER};
-    }
-
-
+public class TLSchemaStructureViewFactory implements PsiStructureViewFactory {
+    @Nullable
     @Override
-    public boolean isAlwaysShowsPlus(StructureViewTreeElement element) {
-        return false;
-    }
-
-    @Override
-    public boolean isAlwaysLeaf(StructureViewTreeElement element) {
-        return element instanceof TLSchemaFile;
+    public StructureViewBuilder getStructureViewBuilder(final PsiFile psiFile) {
+        return new TreeBasedStructureViewBuilder() {
+            @NotNull
+            @Override
+            public StructureViewModel createStructureViewModel(@Nullable Editor editor) {
+                return new TLSchemaStructureViewModel(psiFile);
+            }
+        };
     }
 }
