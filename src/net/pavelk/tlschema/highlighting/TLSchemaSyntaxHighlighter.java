@@ -16,9 +16,8 @@
  *
  */
 
-package net.pavelk.tlschema;
+package net.pavelk.tlschema.highlighting;
 
-import com.intellij.lexer.FlexAdapter;
 import com.intellij.lexer.Lexer;
 import com.intellij.openapi.editor.SyntaxHighlighterColors;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
@@ -27,6 +26,7 @@ import com.intellij.openapi.fileTypes.SyntaxHighlighterBase;
 import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.ui.JBColor;
+import net.pavelk.tlschema.TLSchemaLexerAdapter;
 import net.pavelk.tlschema.psi.TLSchemaTypes;
 import org.jetbrains.annotations.NotNull;
 
@@ -50,7 +50,7 @@ class TLSchemaSyntaxHighlighter extends SyntaxHighlighterBase {
     @NotNull
     @Override
     public Lexer getHighlightingLexer() {
-        return new FlexAdapter(new TLSchemaLexer(null));
+        return new TLSchemaLexerAdapter();
     }
 
     @NotNull
