@@ -1,5 +1,7 @@
 <!--
-  ~ Copyright (C) 2015-2016 Pavel Kunyavskiy
+  ~ Copyright (C)
+  ~     2015-2016 Pavel Kunyavskiy
+  ~     2016-2016 Eugene Kurpilyansky
   ~
   ~     This program is free software: you can redistribute it and/or modify
   ~     it under the terms of the GNU General Public License as published by
@@ -17,53 +19,55 @@
   -->
 
 <idea-plugin version="2">
-  <id>net.pavelk.tlschema.colorer</id>
-  <name>TL Schema support</name>
-  <version>1.1</version>
-  <vendor email="kunyavskiy@gmail.com">Pavel Kunyavskiy</vendor>
+    <id>net.pavelk.tlschema.colorer</id>
+    <name>TL Schema support</name>
+    <version>1.1</version>
+    <vendor email="kunyavskiy@gmail.com">Pavel Kunyavskiy</vendor>
 
 
-  <description>Supports TL schema files coloring and several inspections</description>
+    <description>Supports TL schema files coloring and several inspections</description>
 
-  <change-notes>
-    Structure view for tl schema files.
-    Fixed bug with optional type variables.
-  </change-notes>
+    <change-notes>
+        Structure view for tl schema files.
+        Fixed bug with optional type variables.
+    </change-notes>
 
-  <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Build+Number+Ranges for description -->
-  <idea-version since-build="131"/>
+    <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Build+Number+Ranges for description -->
+    <idea-version since-build="131"/>
 
-  <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
-       on how to target different products -->
-  <depends>com.intellij.modules.lang</depends>
+    <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
+         on how to target different products -->
+    <depends>com.intellij.modules.lang</depends>
 
 
+    <extensions defaultExtensionNs="com.intellij">
+        <fileTypeFactory implementation="net.pavelk.tlschema.TLSchemaFileTypeFactory"/>
+        <lang.parserDefinition language="TLSchema" implementationClass="net.pavelk.tlschema.TLSchemaParserDefinition"/>
+        <lang.syntaxHighlighterFactory key="TLSchema"
+                                       implementationClass="net.pavelk.tlschema.highlighting.TLSchemaSyntaxHighlighterFactory"/>
+        <annotator language="TLSchema" implementationClass="net.pavelk.tlschema.highlighting.TLSchemaAnnotator"/>
+        <colorSettingsPage implementation="net.pavelk.tlschema.highlighting.TLSchemaColorSettingsPage"/>
+        <lang.psiStructureViewFactory language="TLSchema"
+                                      implementationClass="net.pavelk.tlschema.structures.TLSchemaStructureViewFactory"/>
+        <lang.commenter language="TLSchema" implementationClass="net.pavelk.tlschema.TLSchemaCommenter"/>
+        <psi.referenceContributor implementation="net.pavelk.tlschema.references.TLSchemaReferenceContributor"/>
+        <lang.findUsagesProvider language="TLSchema"
+                                 implementationClass="net.pavelk.tlschema.search.TLSchemaFindUsagesProvider"/>
+        <lang.namesValidator language="TLSchema" implementationClass="net.pavelk.tlschema.psi.TLSchemaNamesValidator"/>
+        <gotoSymbolContributor implementation="net.pavelk.tlschema.search.TLSchemaChooseByNameContributor"/>
+        <!-- Add your extensions here -->
+    </extensions>
 
-  <extensions defaultExtensionNs="com.intellij">
-    <fileTypeFactory implementation="net.pavelk.tlschema.TLSchemaFileTypeFactory"/>
-    <lang.parserDefinition language="TLSchema" implementationClass="net.pavelk.tlschema.TLSchemaParserDefinition"/>
-    <lang.syntaxHighlighterFactory key="TLSchema" implementationClass="net.pavelk.tlschema.highlighting.TLSchemaSyntaxHighlighterFactory"/>
-    <annotator language="TLSchema" implementationClass="net.pavelk.tlschema.highlighting.TLSchemaAnnotator"/>
-    <colorSettingsPage implementation="net.pavelk.tlschema.highlighting.TLSchemaColorSettingsPage"/>
-    <lang.psiStructureViewFactory language="TLSchema" implementationClass="net.pavelk.tlschema.structures.TLSchemaStructureViewFactory"/>
-    <lang.commenter language="TLSchema" implementationClass="net.pavelk.tlschema.TLSchemaCommenter"/>
-    <psi.referenceContributor implementation="net.pavelk.tlschema.references.TLSchemaReferenceContributor"/>
-    <lang.findUsagesProvider language="TLSchema" implementationClass="net.pavelk.tlschema.search.TLSchemaFindUsagesProvider"/>
-    <lang.namesValidator language="TLSchema" implementationClass="net.pavelk.tlschema.psi.TLSchemaNamesValidator"/>
-    <gotoSymbolContributor implementation="net.pavelk.tlschema.search.TLSchemaChooseByNameContributor"/>
-    <!-- Add your extensions here -->
-  </extensions>
+    <application-components>
+        <!-- Add your application components here -->
+    </application-components>
 
-  <application-components>
-    <!-- Add your application components here -->
-  </application-components>
+    <project-components>
+        <!-- Add your project components here -->
+    </project-components>
 
-  <project-components>
-    <!-- Add your project components here -->
-  </project-components>
-
-  <actions>
-    <!-- Add your actions here -->
-  </actions>
+    <actions>
+        <!-- Add your actions here -->
+    </actions>
 
 </idea-plugin>
