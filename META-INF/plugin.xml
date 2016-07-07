@@ -21,15 +21,14 @@
 <idea-plugin version="2">
     <id>net.pavelk.tlschema.colorer</id>
     <name>TL Schema support</name>
-    <version>1.1</version>
+    <version>1.2</version>
     <vendor email="kunyavskiy@gmail.com">Pavel Kunyavskiy</vendor>
 
 
     <description>Supports TL schema files coloring and several inspections</description>
 
     <change-notes>
-        Structure view for tl schema files.
-        Fixed bug with optional type variables.
+        Support of Find Usages and references
     </change-notes>
 
     <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Build+Number+Ranges for description -->
