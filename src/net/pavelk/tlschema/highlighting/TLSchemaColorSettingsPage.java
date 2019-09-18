@@ -40,6 +40,7 @@ public class TLSchemaColorSettingsPage implements ColorSettingsPage {
             new AttributesDescriptor("Constructor", TLSchemaSyntaxHighlighter.Constructor),
             new AttributesDescriptor("Constructor Hash", TLSchemaSyntaxHighlighter.ConstructorHash),
             new AttributesDescriptor("Fields Mask", TLSchemaSyntaxHighlighter.FieldsMask),
+            new AttributesDescriptor("Attributes", TLSchemaSyntaxHighlighter.Attribute),
     };
 
     @Nullable

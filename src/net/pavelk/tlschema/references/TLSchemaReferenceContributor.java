@@ -23,6 +23,7 @@ package net.pavelk.tlschema.references;
 import com.intellij.patterns.PlatformPatterns;
 import com.intellij.psi.*;
 import com.intellij.util.ProcessingContext;
+import net.pavelk.tlschema.psi.TLSchemaAttributeNode;
 import net.pavelk.tlschema.psi.TLSchemaLcIdentNs;
 import net.pavelk.tlschema.psi.TLSchemaUcIdentNs;
 import net.pavelk.tlschema.psi.TLSchemaVarIdent;

@@ -19,31 +19,6 @@ WHITE_SPACE=[\ \t\f\n\r]
 END_OF_LINE_COMMENT=("//")[^\r\n]*
 
 
-/*
-  IElementType BRCLOSE = new TLSchemaTokenType("BRCLOSE");
-  IElementType BROPEN = new TLSchemaTokenType("BROPEN");
-  IElementType COLON = new TLSchemaTokenType("COLON");
-  IElementType COMA = new TLSchemaTokenType("COMA");
-  IElementType CRBRCLOSE = new TLSchemaTokenType("CRBRCLOSE");
-  IElementType CRBROPEN = new TLSchemaTokenType("CRBROPEN");
-  IElementType DOT = new TLSchemaTokenType("DOT");
-  IElementType EMPTY_KW = new TLSchemaTokenType("EMPTY_KW");
-  IElementType EQMARK = new TLSchemaTokenType("EQMARK");
-  IElementType EXCMARK = new TLSchemaTokenType("EXCMARK");
-  IElementType FUNCTIONS_KW = new TLSchemaTokenType("FUNCTIONS_KW");
-  IElementType GEQ = new TLSchemaTokenType("GEQ");
-  IElementType LEQ = new TLSchemaTokenType("LEQ");
-  IElementType PERCENT = new TLSchemaTokenType("PERCENT");
-  IElementType QMARK = new TLSchemaTokenType("QMARK");
-  IElementType SEMICOLON = new TLSchemaTokenType("SEMICOLON");
-  IElementType SHARP = new TLSchemaTokenType("SHARP");
-  IElementType SQBRCLOSE = new TLSchemaTokenType("SQBRCLOSE");
-  IElementType SQBROPEN = new TLSchemaTokenType("SQBROPEN");
-  IElementType TRIPPLE_MINUS = new TLSchemaTokenType("TRIPPLE_MINUS");
-  IElementType TYPES_KW = new TLSchemaTokenType("TYPES_KW");
-  IElementType UNDERSCORE = new TLSchemaTokenType("UNDERSCORE");
-*/
-
 LC_LETTER = [a-z]
 UC_LETTER = [A-Z]
 DIGIT = [0-9]
@@ -51,6 +26,7 @@ HEX_DIGIT = [0-9a-f]
 LETTER = [a-zA-Z]
 IDENT_CHAR = [a-zA-Z0-9_]
 SHARP = [#]
+AT = [@]
 
 
 %state YYINITIAL
@@ -58,7 +34,6 @@ SHARP = [#]
 
 %%
 
-<YYINITIAL> Empty { yybegin(YYINITIAL); return TLSchemaTypes.EMPTY_KW; }
 <YYINITIAL> --- { yybegin(YYTMINUS); return TLSchemaTypes.TRIPPLE_MINUS; }
 <YYTMINUS> types { yybegin(YYTMINUS); return TLSchemaTypes.TYPES_KW; }
 <YYTMINUS> functions { yybegin(YYTMINUS); return TLSchemaTypes.FUNCTIONS_KW; }
@@ -78,6 +53,9 @@ SHARP = [#]
 <YYINITIAL> {WHITE_SPACE}+                                  { yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }
 
 <YYINITIAL> {SHARP}                                         { yybegin(YYINITIAL); return TLSchemaTypes.SHARP; }
+
+<YYINITIAL> {AT} {LC_LETTER}*                               { yybegin(YYINITIAL); return TLSchemaTypes.ATTRIBUTE; }
+
 
 <YYINITIAL> \) { yybegin(YYINITIAL); return TLSchemaTypes.BRCLOSE; }
 <YYINITIAL> \( { yybegin(YYINITIAL); return TLSchemaTypes.BROPEN; }

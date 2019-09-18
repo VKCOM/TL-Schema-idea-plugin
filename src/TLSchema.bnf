@@ -23,6 +23,8 @@ comment_node ::= COMMENT
 uc_ident_node ::= UC_IDENT
 lc_ident_node ::= LC_IDENT
 
+attribute_node ::= ATTRIBUTE;
+
 namespace_ident ::= LC_IDENT
 lc_ident_ns ::= [ namespace_ident DOT ] lc_ident_node {
                                                        mixin="net.pavelk.tlschema.psi.impl.TLSchemaNamedElementImpl"
@@ -39,10 +41,9 @@ fun_declarations ::= [ declaration  * ] {methods=[getNamespaces]}
 
 declaration ::= combinator_decl | combinator_decl_builtin {methods=[getCombinator getResultType getNumVars getTypeVars haveConditionalArgs getNamespace]}
 
-combinator_decl_builtin ::= combinator_decl_builtin_type | combinator_decl_builtin_false;
+combinator_decl_builtin ::= combinator_decl_builtin_type;
 
 combinator_decl_builtin_type ::= full_combinator_id QMARK EQMARK result_type SEMICOLON
-combinator_decl_builtin_false ::= EMPTY_KW result_type SEMICOLON
 
 type_expr ::= type_term [ type_term * ]
 expr ::= term [ term * ]
@@ -61,7 +62,7 @@ var_ident ::= lc_ident_node | uc_ident_node {
 type_term ::= term
 nat_term ::= nat_expr
 
-combinator_decl ::= full_combinator_id [ opt_arg* ] [ arg* ] EQMARK result_type SEMICOLON
+combinator_decl ::= [attribute_node *] full_combinator_id [ opt_arg* ] [ arg* ] EQMARK result_type SEMICOLON
 full_combinator_id ::= lc_ident_full | UNDERSCORE
 opt_arg ::= CRBROPEN var_ident [ var_ident* ] COLON [ EXCMARK ] type_expr CRBRCLOSE
 arg ::= arg_array | arg_named | arg_unnamed

@@ -45,13 +45,7 @@ public class TLSchemaPsiImplUtil {
         } else {
             TLSchemaCombinatorDeclBuiltin builtin = decl.getCombinatorDeclBuiltin();
             if (builtin != null) {
-                if (builtin.getCombinatorDeclBuiltinType() != null) {
-                    type = builtin.getCombinatorDeclBuiltinType().getFullCombinatorId();
-                } else if (builtin.getCombinatorDeclBuiltinFalse() != null) {
-                    return null;
-                } else {
-                    throw new AssertionError();
-                }
+                type = builtin.getCombinatorDeclBuiltinType().getFullCombinatorId();
             } else {
                 throw new AssertionError();
             }
@@ -141,13 +135,7 @@ public class TLSchemaPsiImplUtil {
         } else {
             TLSchemaCombinatorDeclBuiltin builtin = decl.getCombinatorDeclBuiltin();
             if (builtin != null) {
-                if (builtin.getCombinatorDeclBuiltinType() != null) {
-                    type = builtin.getCombinatorDeclBuiltinType().getResultType();
-                } else if (builtin.getCombinatorDeclBuiltinFalse() != null) {
-                    type = builtin.getCombinatorDeclBuiltinFalse().getResultType();
-                } else {
-                    throw new AssertionError();
-                }
+                type = builtin.getCombinatorDeclBuiltinType().getResultType();
             } else {
                 throw new AssertionError();
             }

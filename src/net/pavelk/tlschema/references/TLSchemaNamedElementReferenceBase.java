@@ -24,24 +24,25 @@ import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry;
 import com.intellij.util.IncorrectOperationException;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class TLSchemaNamedElementReferenceBase extends PsiReferenceBase<PsiNamedElement> implements PsiPolyVariantReference {
-    protected final String myName;
+    final String myName;
 
-    protected TLSchemaNamedElementReferenceBase(PsiNamedElement element, TextRange rangeInElement) {
+    TLSchemaNamedElementReferenceBase(PsiNamedElement element, TextRange rangeInElement) {
         super(element, rangeInElement);
         myName = element.getName();
     }
 
     @Override
-    public boolean isReferenceTo(PsiElement element) {
-        if (element == null || !(element instanceof PsiNamedElement)) {
+    public boolean isReferenceTo(@NotNull PsiElement element) {
+        if (!(element instanceof PsiNamedElement)) {
             return false;
         }
         String name1 = ((PsiNamedElement)element).getName();
         String myName = myElement.getName();
-        if (name1 == null || myName == null || !name1.equals(myName)) {
+        if (name1 == null || !name1.equals(myName)) {
             return false;
         }
 
@@ -56,6 +57,9 @@ public abstract class TLSchemaNamedElementReferenceBase extends PsiReferenceBase
         } else {
             element = references[0].resolve();
         }
+        if (element == null) {
+            return false;
+        }
         return super.isReferenceTo(element);
     }
 
@@ -67,7 +71,7 @@ public abstract class TLSchemaNamedElementReferenceBase extends PsiReferenceBase
     }
 
     @Override
-    public PsiElement handleElementRename(String newElementName) throws IncorrectOperationException {
+    public PsiElement handleElementRename(@NotNull String newElementName) throws IncorrectOperationException {
         return myElement.setName(newElementName);
     }
 }
