@@ -26,6 +26,7 @@ import com.intellij.lexer.Lexer;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
 import com.intellij.util.Processor;
+import org.jetbrains.annotations.NotNull;
 
 public class TLSchemaWordsScanner implements WordsScanner {
     private final Lexer lexer;
@@ -37,7 +38,7 @@ public class TLSchemaWordsScanner implements WordsScanner {
     }
 
     @Override
-    public void processWords(CharSequence fileText, Processor<WordOccurrence> processor) {
+    public void processWords(@NotNull CharSequence fileText, @NotNull Processor<? super WordOccurrence> processor) {
         lexer.start(fileText);
         WordOccurrence occurrence = new WordOccurrence(fileText, 0, 0, null); // shared occurrence
 
