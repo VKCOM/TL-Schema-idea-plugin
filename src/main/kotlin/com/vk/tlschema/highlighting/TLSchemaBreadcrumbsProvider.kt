@@ -11,9 +11,7 @@ import com.vk.tlschema.psi.TLSchemaFunDeclarations
 import java.util.*
 
 class TLSchemaBreadcrumbsProvider : BreadcrumbsProvider {
-    override fun getLanguages(): Array<Language> {
-        return arrayOf(TLSchemaLanguage.INSTANCE)
-    }
+    override fun getLanguages() = arrayOf(TLSchemaLanguage.INSTANCE)
 
     override fun acceptElement(psiElement: PsiElement): Boolean {
         return (psiElement is TLSchemaFunDeclarations
