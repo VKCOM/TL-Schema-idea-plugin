@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+## 1.4.1 — 12.02.2024
+
+- Added breadcrumbs
+- Fixed file icon
+
+## [Unreleased]
+
 ## 1.4.0 — 12.02.2024
 
 - Moved project to Gradle
