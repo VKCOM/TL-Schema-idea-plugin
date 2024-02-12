@@ -1,5 +1,5 @@
-gen
-out
+.DS_Store
+.gradle
 .idea
-*.iml
-*.jar
+build
+src/main/gen
