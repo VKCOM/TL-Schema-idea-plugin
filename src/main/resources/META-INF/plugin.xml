@@ -1,5 +1,5 @@
 <idea-plugin>
-    <id>net.pavelk.tlschema.colorer</id>
+    <id>com.vk.tlschema.colorer</id>
     <name>TL Schema support</name>
     <version>1.3.2</version>
     <vendor email="kunyavskiy@gmail.com">Pavel Kunyavskiy</vendor>
@@ -20,20 +20,20 @@
 
 
     <extensions defaultExtensionNs="com.intellij">
-        <fileTypeFactory implementation="net.pavelk.tlschema.TLSchemaFileTypeFactory"/>
-        <lang.parserDefinition language="TLSchema" implementationClass="net.pavelk.tlschema.TLSchemaParserDefinition"/>
+        <fileTypeFactory implementation="com.vk.tlschema.TLSchemaFileTypeFactory"/>
+        <lang.parserDefinition language="TLSchema" implementationClass="com.vk.tlschema.TLSchemaParserDefinition"/>
         <lang.syntaxHighlighterFactory key="TLSchema"
-                                       implementationClass="net.pavelk.tlschema.highlighting.TLSchemaSyntaxHighlighterFactory"/>
-        <annotator language="TLSchema" implementationClass="net.pavelk.tlschema.highlighting.TLSchemaAnnotator"/>
-        <colorSettingsPage implementation="net.pavelk.tlschema.highlighting.TLSchemaColorSettingsPage"/>
+                                       implementationClass="com.vk.tlschema.highlighting.TLSchemaSyntaxHighlighterFactory"/>
+        <annotator language="TLSchema" implementationClass="com.vk.tlschema.highlighting.TLSchemaAnnotator"/>
+        <colorSettingsPage implementation="com.vk.tlschema.highlighting.TLSchemaColorSettingsPage"/>
         <lang.psiStructureViewFactory language="TLSchema"
-                                      implementationClass="net.pavelk.tlschema.structures.TLSchemaStructureViewFactory"/>
-        <lang.commenter language="TLSchema" implementationClass="net.pavelk.tlschema.TLSchemaCommenter"/>
-        <psi.referenceContributor implementation="net.pavelk.tlschema.references.TLSchemaReferenceContributor"/>
+                                      implementationClass="com.vk.tlschema.structures.TLSchemaStructureViewFactory"/>
+        <lang.commenter language="TLSchema" implementationClass="com.vk.tlschema.TLSchemaCommenter"/>
+        <psi.referenceContributor implementation="com.vk.tlschema.references.TLSchemaReferenceContributor"/>
         <lang.findUsagesProvider language="TLSchema"
-                                 implementationClass="net.pavelk.tlschema.search.TLSchemaFindUsagesProvider"/>
-        <lang.namesValidator language="TLSchema" implementationClass="net.pavelk.tlschema.psi.TLSchemaNamesValidator"/>
-        <gotoSymbolContributor implementation="net.pavelk.tlschema.search.TLSchemaChooseByNameContributor"/>
+                                 implementationClass="com.vk.tlschema.search.TLSchemaFindUsagesProvider"/>
+        <lang.namesValidator language="TLSchema" implementationClass="com.vk.tlschema.psi.TLSchemaNamesValidator"/>
+        <gotoSymbolContributor implementation="com.vk.tlschema.search.TLSchemaChooseByNameContributor"/>
         <!-- Add your extensions here -->
     </extensions>
 

@@ -1,8 +1,8 @@
-package net.pavelk.tlschema;
+package com.vk.tlschema;
 
 import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
-import net.pavelk.tlschema.psi.TLSchemaTypes;
+import com.vk.tlschema.psi.TLSchemaTypes;
 import com.intellij.psi.TokenType;
 
 %%

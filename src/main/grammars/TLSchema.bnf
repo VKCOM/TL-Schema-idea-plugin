@@ -1,18 +1,18 @@
 {
-  parserClass="net.pavelk.tlschema.parser.TLSchemaParser"
+  parserClass="com.vk.tlschema.parser.TLSchemaParser"
 
   extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
 
   psiClassPrefix="TLSchema"
   psiImplClassSuffix="Impl"
-  psiPackage="net.pavelk.tlschema.psi"
-  psiImplPackage="net.pavelk.tlschema.psi.impl"
+  psiPackage="com.vk.tlschema.psi"
+  psiImplPackage="com.vk.tlschema.psi.impl"
 
-  elementTypeHolderClass="net.pavelk.tlschema.psi.TLSchemaTypes"
-  elementTypeClass="net.pavelk.tlschema.psi.TLSchemaElementType"
-  tokenTypeClass="net.pavelk.tlschema.psi.TLSchemaTokenType"
+  elementTypeHolderClass="com.vk.tlschema.psi.TLSchemaTypes"
+  elementTypeClass="com.vk.tlschema.psi.TLSchemaElementType"
+  tokenTypeClass="com.vk.tlschema.psi.TLSchemaTokenType"
 
-  psiImplUtilClass="net.pavelk.tlschema.psi.impl.TLSchemaPsiImplUtil"
+  psiImplUtilClass="com.vk.tlschema.psi.impl.TLSchemaPsiImplUtil"
 }
 
 
@@ -27,12 +27,12 @@ attribute_node ::= ATTRIBUTE;
 
 namespace_ident ::= LC_IDENT
 lc_ident_ns ::= [ namespace_ident DOT ] lc_ident_node {
-                                                       mixin="net.pavelk.tlschema.psi.impl.TLSchemaNamedElementImpl"
-                                                       implements="net.pavelk.tlschema.psi.TLSchemaNamedElement"
+                                                       mixin="com.vk.tlschema.psi.impl.TLSchemaNamedElementImpl"
+                                                       implements="com.vk.tlschema.psi.TLSchemaNamedElement"
                                                        methods=[getName setName getReference getReferences getPresentation getDeclaration]}
 uc_ident_ns ::= [ namespace_ident DOT ] uc_ident_node {
-                                                       mixin="net.pavelk.tlschema.psi.impl.TLSchemaNamedElementImpl"
-                                                       implements="net.pavelk.tlschema.psi.TLSchemaNamedElement"
+                                                       mixin="com.vk.tlschema.psi.impl.TLSchemaNamedElementImpl"
+                                                       implements="com.vk.tlschema.psi.TLSchemaNamedElement"
                                                        methods=[getName setName getReference getReferences getPresentation getDeclaration]}
 lc_ident_full ::= lc_ident_ns [ SHARP_HEX_NUMBER ] {methods=[getDeclaration]}
 
@@ -56,8 +56,8 @@ percent_term ::= PERCENT term
 type_ident ::= boxed_type_ident | lc_ident_ns | SHARP
 boxed_type_ident ::= uc_ident_ns
 var_ident ::= lc_ident_node | uc_ident_node {
-                                             mixin="net.pavelk.tlschema.psi.impl.TLSchemaNamedElementImpl"
-                                             implements="net.pavelk.tlschema.psi.TLSchemaNamedElement"
+                                             mixin="com.vk.tlschema.psi.impl.TLSchemaNamedElementImpl"
+                                             implements="com.vk.tlschema.psi.TLSchemaNamedElement"
                                              methods=[getName setName getReference getReferences getPresentation getDeclaration]}
 type_term ::= term
 nat_term ::= nat_expr
