@@ -11,8 +11,6 @@
   elementTypeHolderClass="com.vk.tlschema.psi.TLSchemaTypes"
   elementTypeClass="com.vk.tlschema.psi.TLSchemaElementType"
   tokenTypeClass="com.vk.tlschema.psi.TLSchemaTokenType"
-
-  psiImplUtilClass="com.vk.tlschema.psi.impl.TLSchemaPsiImplUtil"
 }
 
 
