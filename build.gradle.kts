@@ -74,6 +74,18 @@ tasks {
         purgeOldFiles = true
     }
 
+    generateParser {
+        sourceFile = file("src/main/grammars/TLSchema.bnf")
+        targetRoot = "src/main/gen"
+        pathToParser = "/com/vk/tlschema/parser/TLSchemaParser.java"
+        pathToPsiRoot = "/com/vk/tlschema/psi"
+        purgeOldFiles = true
+    }
+
+    withType<KotlinCompile> {
+        dependsOn(generateLexer, generateParser)
+    }
+
     wrapper {
         gradleVersion = properties("gradleVersion").get()
     }
