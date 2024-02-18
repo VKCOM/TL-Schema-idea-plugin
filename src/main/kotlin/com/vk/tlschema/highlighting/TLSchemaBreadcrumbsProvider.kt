@@ -21,7 +21,7 @@ class TLSchemaBreadcrumbsProvider : BreadcrumbsProvider {
     override fun getElementInfo(element: PsiElement): String = when (element) {
         is TLSchemaFunDeclarations -> "functions"
         is TLSchemaConstructorDeclarations -> "types"
-        is TLSchemaDeclaration -> element.getCombinator().getName()!!
+        is TLSchemaDeclaration -> element.getCombinator()?.getName()!!
         else -> throw IllegalArgumentException("Not supported")
     }
 }
