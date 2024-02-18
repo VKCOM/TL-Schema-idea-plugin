@@ -19,7 +19,7 @@ abstract class TLSchemaDeclarationMixin(node: ASTNode) : ASTWrapperPsiElement(no
         return findChildByClass(TLSchemaCombinatorDeclBuiltin::class.java)
     }
 
-    override fun getCombinator(): TLSchemaLcIdentNs {
+    override fun getCombinator(): TLSchemaLcIdentNs? {
         return TLSchemaPsiImplUtil.getCombinator(this)
     }
 
@@ -27,11 +27,11 @@ abstract class TLSchemaDeclarationMixin(node: ASTNode) : ASTWrapperPsiElement(no
         return TLSchemaPsiImplUtil.getResultType(this)
     }
 
-    override fun getNumVars(): MutableList<TLSchemaVarIdent> {
+    override fun getNumVars(): List<TLSchemaVarIdent>? {
         return TLSchemaPsiImplUtil.getNumVars(this)
     }
 
-    override fun getTypeVars(): MutableList<TLSchemaVarIdent> {
+    override fun getTypeVars(): List<TLSchemaVarIdent>? {
         return TLSchemaPsiImplUtil.getTypeVars(this)
     }
 

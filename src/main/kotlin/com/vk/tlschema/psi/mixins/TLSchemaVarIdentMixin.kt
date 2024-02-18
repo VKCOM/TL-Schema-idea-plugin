@@ -28,7 +28,7 @@ abstract class TLSchemaVarIdentMixin(node: ASTNode) : ASTWrapperPsiElement(node)
         return findChildByClass(TLSchemaUcIdentNode::class.java)
     }
 
-    override fun getDeclaration(): TLSchemaDeclaration {
+    override fun getDeclaration(): TLSchemaDeclaration? {
         return TLSchemaPsiImplUtil.getDeclaration(this)
     }
 
