@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Set;
 
 public class TLSchemaPsiImplUtil {
+    @Nullable
     public static TLSchemaLcIdentNs getCombinator(TLSchemaDeclaration decl) {
         TLSchemaFullCombinatorId type;
         if (decl.getCombinatorDecl() != null) {
@@ -37,6 +38,7 @@ public class TLSchemaPsiImplUtil {
         }
     }
 
+    @Nullable
     public static List<TLSchemaVarIdent> getNumVars(TLSchemaDeclaration _decl) {
         if (_decl.getCombinatorDeclBuiltin() != null) {
             return null;
@@ -87,7 +89,7 @@ public class TLSchemaPsiImplUtil {
         return false;
     }
 
-
+    @Nullable
     public static List<TLSchemaVarIdent> getTypeVars(TLSchemaDeclaration _decl) {
         if (_decl.getCombinatorDeclBuiltin() != null) {
             return null;
@@ -123,6 +125,7 @@ public class TLSchemaPsiImplUtil {
         return type;
     }
 
+    @Nullable
     public static TLSchemaDeclaration getDeclaration(@NotNull PsiElement element) {
         return PsiTreeUtil.getParentOfType(element, TLSchemaDeclaration.class);
     }
@@ -183,6 +186,7 @@ public class TLSchemaPsiImplUtil {
         return ReferenceProvidersRegistry.getReferencesFromProviders(element);
     }
 
+    @Nullable
     public static PsiReference getReference(PsiElement element) {
         PsiReference[] references = getReferences(element);
         return references.length == 1 ? references[0] : null;
