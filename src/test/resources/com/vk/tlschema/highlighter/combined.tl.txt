@@ -1,0 +1,16 @@
+//␣Builtin␣types
+    TLSCHEMA_COMMENT => DEFAULT_LINE_COMMENT
+//␣4␣bytes␣--␣single␣precision
+    TLSCHEMA_COMMENT => DEFAULT_LINE_COMMENT
+//␣8␣bytes␣--␣double␣precision
+    TLSCHEMA_COMMENT => DEFAULT_LINE_COMMENT
+//␣Common␣aliases␣with␣checks
+    TLSCHEMA_COMMENT => DEFAULT_LINE_COMMENT
+//␣Boolean␣emulation
+    TLSCHEMA_COMMENT => DEFAULT_LINE_COMMENT
+//␣Boolean␣for␣diagonal␣queries
+    TLSCHEMA_COMMENT => DEFAULT_LINE_COMMENT
+//␣Vector
+    TLSCHEMA_COMMENT => DEFAULT_LINE_COMMENT
+//␣stat␣vector:%(Vector␣%statOne)␣=␣Stat;
+    TLSCHEMA_COMMENT => DEFAULT_LINE_COMMENT
