@@ -18,5 +18,5 @@ abstract class TLSchemaLexerTestBase : LexerTestCase() {
         return name.trimStart()
     }
 
-    fun doTest() = super.doFileTest("tl")
+    protected fun doTest() = super.doFileTest("tl")
 }

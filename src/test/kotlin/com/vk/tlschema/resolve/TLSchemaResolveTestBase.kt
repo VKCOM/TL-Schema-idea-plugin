@@ -3,20 +3,12 @@ package com.vk.tlschema.resolve
 import com.intellij.lang.LanguageCommenters
 import com.intellij.psi.PsiElement
 import com.intellij.psi.util.PsiTreeUtil
-import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import com.intellij.testFramework.fixtures.CodeInsightTestFixture
-import com.vk.tlschema.TLSchemaTestingUtil
+import com.vk.tlschema.TLSchemaTestBase
 import com.vk.tlschema.psi.TLSchemaNamedElement
 
-abstract class TLSchemaResolveTestBase : BasePlatformTestCase() {
-    override fun getTestDataPath(): String {
-        return TLSchemaTestingUtil.getTestDataPath() + "/resolve"
-    }
-
-    override fun getTestName(lowercaseFirstLetter: Boolean): String {
-        val name = super.getTestName(lowercaseFirstLetter)
-        return name.trimStart()
-    }
+abstract class TLSchemaResolveTestBase : TLSchemaTestBase() {
+    override val dataPath = "resolve"
 
     protected fun <T : PsiElement> doTest(targetPsiClass: Class<T>) {
         val testName = getTestName(false)

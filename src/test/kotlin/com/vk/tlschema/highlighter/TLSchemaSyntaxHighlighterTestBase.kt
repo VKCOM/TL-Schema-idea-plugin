@@ -1,18 +1,10 @@
 package com.vk.tlschema.highlighter
 
 import com.intellij.testFramework.EditorTestUtil
-import com.intellij.testFramework.fixtures.BasePlatformTestCase
-import com.vk.tlschema.TLSchemaTestingUtil
+import com.vk.tlschema.TLSchemaTestBase
 
-abstract class TLSchemaSyntaxHighlighterTestBase : BasePlatformTestCase() {
-    override fun getTestDataPath(): String {
-        return TLSchemaTestingUtil.getTestDataPath() + "/highlighter"
-    }
-
-    override fun getTestName(lowercaseFirstLetter: Boolean): String {
-        val name = super.getTestName(lowercaseFirstLetter)
-        return name.trimStart()
-    }
+abstract class TLSchemaSyntaxHighlighterTestBase : TLSchemaTestBase() {
+    override val dataPath = "highlighter"
 
     protected fun doTest() {
         val testName = getTestName(false)

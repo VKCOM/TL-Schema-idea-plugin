@@ -17,7 +17,7 @@ abstract class TLSchemaParserTestBase(folderPath: String) : ParsingTestCase(
         return name.trimStart()
     }
 
-    fun doTest() {
+    protected fun doTest() {
         super.doTest(true, true)
     }
 }
