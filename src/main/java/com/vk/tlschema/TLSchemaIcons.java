@@ -5,5 +5,5 @@ import com.intellij.openapi.util.IconLoader;
 import javax.swing.*;
 
 public class TLSchemaIcons {
-    public static final Icon FILE = IconLoader.getIcon("/com/vk/tlschema/icons/TL.png");
+    public static final Icon FILE = IconLoader.getIcon("/icons/TL.png", TLSchemaIcons.class.getClassLoader());
 }

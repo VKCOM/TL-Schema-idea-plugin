@@ -18,7 +18,6 @@ import java.util.List;
 public class TLSchemaAnnotator implements Annotator {
     @Override
     public void annotate(@NotNull final PsiElement element, @NotNull AnnotationHolder holder) {
-        System.out.println(element.toString());
         if (element instanceof TLSchemaResultTypeImpl) {
             ColorType(((TLSchemaResultTypeImpl) element).getBoxedTypeIdent(), holder, false, true);
             return;

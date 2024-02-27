@@ -6,6 +6,7 @@
 
 - Moved project to Gradle
 - Change package to `com.vk.tlschema`
+- Added breadcrumbs
 
 ## 1.3.2 — 08.07.2020
 

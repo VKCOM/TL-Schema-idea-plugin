@@ -26,6 +26,7 @@
                                  implementationClass="com.vk.tlschema.search.TLSchemaFindUsagesProvider"/>
         <lang.namesValidator language="TLSchema" implementationClass="com.vk.tlschema.psi.TLSchemaNamesValidator"/>
         <gotoSymbolContributor implementation="com.vk.tlschema.search.TLSchemaChooseByNameContributor"/>
+        <breadcrumbsInfoProvider implementation="com.vk.tlschema.highlighting.TLSchemaBreadcrumbsProvider"/>
         <!-- Add your extensions here -->
     </extensions>
 
