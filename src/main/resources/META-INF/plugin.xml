@@ -16,6 +16,9 @@
         <lang.parserDefinition language="TLSchema" implementationClass="com.vk.tlschema.TLSchemaParserDefinition"/>
         <lang.syntaxHighlighterFactory key="TLSchema"
                                        implementationClass="com.vk.tlschema.highlighting.TLSchemaSyntaxHighlighterFactory"/>
+        <lang.formatter
+                language="TLSchema"
+                implementationClass="com.vk.tlschema.formatter.TLSchemaFormattingModelBuilder"/>
         <annotator language="TLSchema" implementationClass="com.vk.tlschema.highlighting.TLSchemaAnnotator"/>
         <colorSettingsPage implementation="com.vk.tlschema.highlighting.TLSchemaColorSettingsPage"/>
         <lang.psiStructureViewFactory language="TLSchema"
