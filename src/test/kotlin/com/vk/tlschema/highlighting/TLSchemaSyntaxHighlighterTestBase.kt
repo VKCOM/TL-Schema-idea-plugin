@@ -1,10 +1,10 @@
-package com.vk.tlschema.highlighter
+package com.vk.tlschema.highlighting
 
 import com.intellij.testFramework.EditorTestUtil
 import com.vk.tlschema.TLSchemaTestBase
 
 abstract class TLSchemaSyntaxHighlighterTestBase : TLSchemaTestBase() {
-    override val dataPath = "highlighter"
+    override val dataPath = "highlighting"
 
     protected fun doTest() {
         val testName = getTestName(false)

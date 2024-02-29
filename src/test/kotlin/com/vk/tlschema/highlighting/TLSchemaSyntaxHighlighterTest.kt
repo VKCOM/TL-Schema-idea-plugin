@@ -1,4 +1,4 @@
-package com.vk.tlschema.highlighter
+package com.vk.tlschema.highlighting
 
 class TLSchemaSyntaxHighlighterTest : TLSchemaSyntaxHighlighterTestBase() {
     fun `test combined`() = doTest()
