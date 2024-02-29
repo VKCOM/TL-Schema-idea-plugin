@@ -8,7 +8,7 @@ abstract class TLSchemaSyntaxHighlighterTestBase : TLSchemaTestBase() {
 
     protected fun doTest() {
         val testName = getTestName(false)
-        myFixture.configureByFiles("$testName.tl")
+        myFixture.configureByTLFile(testName)
 
         val answerFilePath = "$testDataPath/$testName.tl.txt"
 

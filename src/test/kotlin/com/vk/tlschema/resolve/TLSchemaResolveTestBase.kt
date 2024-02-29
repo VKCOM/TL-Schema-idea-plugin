@@ -12,7 +12,7 @@ abstract class TLSchemaResolveTestBase : TLSchemaTestBase() {
 
     protected fun <T : PsiElement> doTest(targetPsiClass: Class<T>) {
         val testName = getTestName(false)
-        myFixture.configureByFiles("$testName.tl")
+        myFixture.configureByTLFile(testName)
 
         val targetElement = myFixture.findElementBeforeTag(targetPsiClass, "target")
         val referenceElement = myFixture.findElementBeforeTag(TLSchemaNamedElement::class.java, "ref")

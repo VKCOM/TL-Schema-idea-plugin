@@ -6,7 +6,7 @@ import com.vk.tlschema.TLSchemaTestingUtil
 
 abstract class TLSchemaParserTestBase(folderPath: String) : ParsingTestCase(
     "parser/$folderPath",
-    "tl",
+    TLSchemaTestingUtil.FILE_EXTENSION,
     true,
     TLSchemaParserDefinition(),
 ) {

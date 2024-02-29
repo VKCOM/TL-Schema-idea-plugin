@@ -8,8 +8,8 @@ class TLSchemaRenameRefactoringTest : TLSchemaRefactoringTestBase("rename") {
     private fun doTest(newName: String) {
         val testName = getTestName(false)
 
-        myFixture.configureByFiles("$testName.tl")
+        myFixture.configureByTLFile(testName)
         myFixture.renameElementAtCaret(newName)
-        myFixture.checkResultByFile("$testName.after.tl")
+        myFixture.checkResultByTLFile("$testName.after")
     }
 }
