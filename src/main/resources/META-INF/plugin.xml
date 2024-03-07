@@ -12,7 +12,11 @@
 
 
     <extensions defaultExtensionNs="com.intellij">
-        <fileTypeFactory implementation="com.vk.tlschema.TLSchemaFileTypeFactory"/>
+        <fileType name="TLSchema"
+                  language="TLSchema"
+                  implementationClass="com.vk.tlschema.TLSchemaFileType"
+                  fieldName="INSTANCE"
+                  extensions="tl"/>
         <lang.parserDefinition language="TLSchema" implementationClass="com.vk.tlschema.TLSchemaParserDefinition"/>
         <lang.syntaxHighlighterFactory key="TLSchema"
                                        implementationClass="com.vk.tlschema.highlighting.TLSchemaSyntaxHighlighterFactory"/>
