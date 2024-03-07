@@ -14,8 +14,8 @@
                   fieldName="INSTANCE"
                   extensions="tl"/>
         <lang.parserDefinition language="TLSchema" implementationClass="com.vk.tlschema.TLSchemaParserDefinition"/>
-        <lang.syntaxHighlighterFactory language="TLSchema"
-                                       implementationClass="com.vk.tlschema.highlighting.TLSchemaSyntaxHighlighterFactory"/>
+        <lang.syntaxHighlighter language="TLSchema"
+                                implementationClass="com.vk.tlschema.highlighting.TLSchemaSyntaxHighlighter"/>
         <lang.commenter language="TLSchema" implementationClass="com.vk.tlschema.TLSchemaCommenter"/>
         <lang.namesValidator language="TLSchema" implementationClass="com.vk.tlschema.psi.TLSchemaNamesValidator"/>
         <lang.findUsagesProvider language="TLSchema"
