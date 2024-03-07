@@ -8,24 +8,30 @@
     <depends>com.intellij.modules.lang</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <fileType name="TLSchema"
-                  language="TLSchema"
+        <fileType language="TLSchema"
+                  name="TLSchema"
                   implementationClass="com.vk.tlschema.TLSchemaFileType"
                   fieldName="INSTANCE"
                   extensions="tl"/>
         <lang.parserDefinition language="TLSchema" implementationClass="com.vk.tlschema.TLSchemaParserDefinition"/>
-        <lang.syntaxHighlighterFactory key="TLSchema"
+        <lang.syntaxHighlighterFactory language="TLSchema"
                                        implementationClass="com.vk.tlschema.highlighting.TLSchemaSyntaxHighlighterFactory"/>
-        <annotator language="TLSchema" implementationClass="com.vk.tlschema.highlighting.TLSchemaAnnotator"/>
-        <colorSettingsPage implementation="com.vk.tlschema.highlighting.TLSchemaColorSettingsPage"/>
-        <lang.psiStructureViewFactory language="TLSchema"
-                                      implementationClass="com.vk.tlschema.structures.TLSchemaStructureViewFactory"/>
         <lang.commenter language="TLSchema" implementationClass="com.vk.tlschema.TLSchemaCommenter"/>
-        <psi.referenceContributor implementation="com.vk.tlschema.references.TLSchemaReferenceContributor"/>
+        <lang.namesValidator language="TLSchema" implementationClass="com.vk.tlschema.psi.TLSchemaNamesValidator"/>
         <lang.findUsagesProvider language="TLSchema"
                                  implementationClass="com.vk.tlschema.search.TLSchemaFindUsagesProvider"/>
-        <lang.namesValidator language="TLSchema" implementationClass="com.vk.tlschema.psi.TLSchemaNamesValidator"/>
+        <lang.psiStructureViewFactory language="TLSchema"
+                                      implementationClass="com.vk.tlschema.structures.TLSchemaStructureViewFactory"/>
+
+        <psi.referenceContributor language="TLSchema"
+                                  implementation="com.vk.tlschema.references.TLSchemaReferenceContributor"/>
+
+        <annotator language="TLSchema" implementationClass="com.vk.tlschema.highlighting.TLSchemaAnnotator"/>
+
+        <colorSettingsPage implementation="com.vk.tlschema.highlighting.TLSchemaColorSettingsPage"/>
+
         <gotoSymbolContributor implementation="com.vk.tlschema.search.TLSchemaChooseByNameContributor"/>
+
         <breadcrumbsInfoProvider implementation="com.vk.tlschema.highlighting.TLSchemaBreadcrumbsProvider"/>
     </extensions>
 
