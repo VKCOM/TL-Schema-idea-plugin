@@ -8,30 +8,48 @@
     <depends>com.intellij.modules.lang</depends>
 
     <extensions defaultExtensionNs="com.intellij">
+        <!-- File Type -->
         <fileType language="TLSchema"
                   name="TLSchema"
                   implementationClass="com.vk.tlschema.TLSchemaFileType"
                   fieldName="INSTANCE"
                   extensions="tl"/>
+
+        <!-- Parser -->
         <lang.parserDefinition language="TLSchema" implementationClass="com.vk.tlschema.TLSchemaParserDefinition"/>
+
+        <!-- Syntax Highlighter -->
         <lang.syntaxHighlighter language="TLSchema"
                                 implementationClass="com.vk.tlschema.highlighting.TLSchemaSyntaxHighlighter"/>
+
+        <!-- Commenter -->
         <lang.commenter language="TLSchema" implementationClass="com.vk.tlschema.TLSchemaCommenter"/>
+
+        <!-- Refactoring -->
         <lang.namesValidator language="TLSchema" implementationClass="com.vk.tlschema.psi.TLSchemaNamesValidator"/>
+
+        <!-- Usages Provider -->
         <lang.findUsagesProvider language="TLSchema"
                                  implementationClass="com.vk.tlschema.search.TLSchemaFindUsagesProvider"/>
+
+        <!-- Structure View -->
         <lang.psiStructureViewFactory language="TLSchema"
                                       implementationClass="com.vk.tlschema.structures.TLSchemaStructureViewFactory"/>
 
+        <!-- Resolve -->
         <psi.referenceContributor language="TLSchema"
                                   implementation="com.vk.tlschema.references.TLSchemaReferenceContributor"/>
 
+        <!-- Annotator -->
         <annotator language="TLSchema" implementationClass="com.vk.tlschema.highlighting.TLSchemaAnnotator"/>
 
+        <!-- Color Settings -->
         <colorSettingsPage implementation="com.vk.tlschema.highlighting.TLSchemaColorSettingsPage"/>
 
+        <!-- Navigation -->
         <gotoSymbolContributor implementation="com.vk.tlschema.search.TLSchemaChooseByNameContributor"/>
 
+        <!-- Description Provider -->
         <breadcrumbsInfoProvider implementation="com.vk.tlschema.highlighting.TLSchemaBreadcrumbsProvider"/>
     </extensions>
 
