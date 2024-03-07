@@ -3,13 +3,9 @@
     <name>TL Schema Support</name>
     <vendor email="unserialize.alias@gmail.com">Aleksandr Kirsanov</vendor>
 
-
     <description>Supports TL schema files coloring and several inspections</description>
 
-    <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
-         on how to target different products -->
     <depends>com.intellij.modules.lang</depends>
-
 
     <extensions defaultExtensionNs="com.intellij">
         <fileType name="TLSchema"
@@ -31,19 +27,6 @@
         <lang.namesValidator language="TLSchema" implementationClass="com.vk.tlschema.psi.TLSchemaNamesValidator"/>
         <gotoSymbolContributor implementation="com.vk.tlschema.search.TLSchemaChooseByNameContributor"/>
         <breadcrumbsInfoProvider implementation="com.vk.tlschema.highlighting.TLSchemaBreadcrumbsProvider"/>
-        <!-- Add your extensions here -->
     </extensions>
-
-    <application-components>
-        <!-- Add your application components here -->
-    </application-components>
-
-    <project-components>
-        <!-- Add your project components here -->
-    </project-components>
-
-    <actions>
-        <!-- Add your actions here -->
-    </actions>
 
 </idea-plugin>
