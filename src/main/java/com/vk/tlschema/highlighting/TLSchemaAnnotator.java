@@ -1,7 +1,9 @@
 package com.vk.tlschema.highlighting;
 
 import com.intellij.codeInspection.util.InspectionMessage;
-import com.intellij.lang.annotation.*;
+import com.intellij.lang.annotation.AnnotationHolder;
+import com.intellij.lang.annotation.Annotator;
+import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.openapi.editor.SyntaxHighlighterColors;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.openapi.util.TextRange;
@@ -10,7 +12,6 @@ import com.vk.tlschema.Constants;
 import com.vk.tlschema.psi.*;
 import com.vk.tlschema.psi.impl.*;
 import com.vk.tlschema.search.TLSchemaSearchUtils;
-import org.bouncycastle.util.Arrays;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -18,12 +19,13 @@ import java.util.List;
 public class TLSchemaAnnotator implements Annotator {
     @Override
     public void annotate(@NotNull final PsiElement element, @NotNull AnnotationHolder holder) {
-        if (element instanceof TLSchemaResultTypeImpl) {
-            ColorType(((TLSchemaResultTypeImpl) element).getBoxedTypeIdent(), holder, false, true);
+        if (element instanceof TLSchemaResultTypeImpl schemaResultType) {
+            ColorType(schemaResultType.getBoxedTypeIdent(), holder, false, true);
             return;
         }
-        if (element instanceof TLSchemaFullCombinatorIdImpl) {
-            TLSchemaLcIdentFull identFull = ((TLSchemaFullCombinatorIdImpl) element).getLcIdentFull();
+
+        if (element instanceof TLSchemaFullCombinatorIdImpl fullCombinatorId) {
+            TLSchemaLcIdentFull identFull = fullCombinatorId.getLcIdentFull();
             if (identFull != null) {
                 TLSchemaLcIdentNs ident = identFull.getLcIdentNs();
                 TextRange range = ident.getTextRange();
@@ -39,21 +41,24 @@ public class TLSchemaAnnotator implements Annotator {
                 }
             }
         }
-        if (element instanceof TLSchemaTypeTermImpl) {
-            AnnotateType((TLSchemaTermImpl) ((TLSchemaTypeTermImpl) element).getTerm(), holder, false);
+
+        if (element instanceof TLSchemaTypeTermImpl typeTerm) {
+            AnnotateType((TLSchemaTermImpl) typeTerm.getTerm(), holder, false);
         }
+
         if (element instanceof TLSchemaConditionalDefImpl) {
             TextRange range = element.getTextRange();
             setHighlighting(holder, range, TLSchemaSyntaxHighlighter.FieldsMask);
         }
+
         if (element instanceof TLSchemaAttributeNodeImpl) {
             PsiElement parent = element.getParent();
             if (parent.getFirstChild() == element) {
                 boolean rw_attrs = false;
-                for (PsiElement child: parent.getChildren()) {
+                for (PsiElement child : parent.getChildren()) {
                     if (child instanceof TLSchemaAttributeNodeImpl) {
                         boolean is_rw = false;
-                        for (String name: Constants.rwAnnotations) {
+                        for (String name : Constants.rwAnnotations) {
                             if (child.getText().equals(name)) {
                                 is_rw = true;
                                 break;
@@ -72,7 +77,7 @@ public class TLSchemaAnnotator implements Annotator {
             }
             TextRange range = element.getTextRange();
             boolean known = false;
-            for (String name: Constants.validAnnotations) {
+            for (String name : Constants.validAnnotations) {
                 if (element.getText().equals(name)) {
                     known = true;
                     break;
@@ -158,12 +163,11 @@ public class TLSchemaAnnotator implements Annotator {
         if (is_simple_type) {
             TLSchemaResultType resultType = cons.get(0);
             PsiElement parent = resultType.getParent();
-            if (parent instanceof TLSchemaCombinatorDecl) {
-                TLSchemaCombinatorDecl decl = (TLSchemaCombinatorDecl) parent;
-                if (decl.getFullCombinatorId().getLcIdentFull() != null) {
-                    String name = decl.getFullCombinatorId().getLcIdentFull().getLcIdentNs().getName();
+            if (parent instanceof TLSchemaCombinatorDecl combinatorDecl) {
+                if (combinatorDecl.getFullCombinatorId().getLcIdentFull() != null) {
+                    String name = combinatorDecl.getFullCombinatorId().getLcIdentFull().getLcIdentNs().getName();
                     String type_name = resultType.getBoxedTypeIdent().getUcIdentNs().getName();
-                    if (name != null && type_name != null && !name.toLowerCase().equals(type_name.toLowerCase())) {
+                    if (name != null && type_name != null && !name.equalsIgnoreCase(type_name)) {
                         is_simple_type = false;
                     }
                 }
@@ -186,10 +190,11 @@ public class TLSchemaAnnotator implements Annotator {
             for (TLSchemaVarIdent id : typeVars) {
                 if (id.getText().equals(type)) {
                     type_arg = true;
+                    break;
                 }
             }
         }
-        if (cons.size() == 0 && !type.equals("#") && !type.equals("Type") && !type_arg) {
+        if (cons.isEmpty() && !type.equals("#") && !type.equals("Type") && !type_arg) {
             createErrorAnnotation(holder, range, "Unknown type");
         } else if (is_simple_type && !percent && !bare && !no_bare) {
             createWarningAnnotation(holder, range, "This type can be made bare");
