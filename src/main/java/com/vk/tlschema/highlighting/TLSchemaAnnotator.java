@@ -2,6 +2,7 @@ package com.vk.tlschema.highlighting;
 
 import com.intellij.lang.annotation.*;
 import com.intellij.openapi.editor.SyntaxHighlighterColors;
+import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.vk.tlschema.Constants;
@@ -26,16 +27,10 @@ public class TLSchemaAnnotator implements Annotator {
                 TLSchemaLcIdentNs ident = identFull.getLcIdentNs();
                 TextRange range = ident.getTextRange();
 
-                holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                        .range(range)
-                        .textAttributes(TLSchemaSyntaxHighlighter.Constructor)
-                        .create();
+                setHighlighting(range, holder, TLSchemaSyntaxHighlighter.Constructor);
                 if (ident.getTextLength() != identFull.getTextLength()) {
                     TextRange range_num = new TextRange(ident.getTextOffset() + ident.getTextLength(), identFull.getTextOffset() + identFull.getTextLength());
-                    holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                            .range(range_num)
-                            .textAttributes(TLSchemaSyntaxHighlighter.ConstructorHash)
-                            .create();
+                    setHighlighting(range_num, holder, TLSchemaSyntaxHighlighter.ConstructorHash);
                 } else {
                     if (TLSchemaPsiImplUtil.getDeclaration(ident).haveConditionalArgs()) {
                         holder.newAnnotation(HighlightSeverity.WARNING, "Constructor hash should be specified")
@@ -50,10 +45,7 @@ public class TLSchemaAnnotator implements Annotator {
         }
         if (element instanceof TLSchemaConditionalDefImpl) {
             TextRange range = element.getTextRange();
-            holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                    .range(range)
-                    .textAttributes(TLSchemaSyntaxHighlighter.FieldsMask)
-                    .create();
+            setHighlighting(range, holder, TLSchemaSyntaxHighlighter.FieldsMask);
         }
         if (element instanceof TLSchemaAttributeNodeImpl) {
             PsiElement parent = element.getParent();
@@ -90,10 +82,7 @@ public class TLSchemaAnnotator implements Annotator {
             }
 
             if (known) {
-                holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                        .range(range)
-                        .textAttributes(TLSchemaSyntaxHighlighter.Attribute)
-                        .create();
+                setHighlighting(range, holder, TLSchemaSyntaxHighlighter.Attribute);
             } else {
                 holder.newAnnotation(HighlightSeverity.ERROR, "Unknown Attribute").range(range).create();
             }
@@ -115,10 +104,7 @@ public class TLSchemaAnnotator implements Annotator {
         if (element.getNatExpr() != null) {
             TLSchemaNatExpr expr = element.getNatExpr();
             TextRange range = expr.getTextRange();
-            holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                    .range(range)
-                    .textAttributes(SyntaxHighlighterColors.NUMBER)
-                    .create();
+            setHighlighting(range, holder, SyntaxHighlighterColors.NUMBER);
             if (percent) {
                 holder.newAnnotation(HighlightSeverity.ERROR, "Percent can't be applied to number")
                         .range(range)
@@ -195,10 +181,7 @@ public class TLSchemaAnnotator implements Annotator {
         if (numVars != null) {
             for (TLSchemaVarIdent id : numVars) {
                 if (id.getText().equals(type)) {
-                    holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                            .range(range)
-                            .textAttributes(TLSchemaSyntaxHighlighter.NumericVar)
-                            .create();
+                    setHighlighting(range, holder, TLSchemaSyntaxHighlighter.NumericVar);
                     return;
                 }
             }
@@ -220,16 +203,17 @@ public class TLSchemaAnnotator implements Annotator {
             holder.newAnnotation(HighlightSeverity.ERROR, "This type can't be made bare").range(range).create();
         } else {
             if (percent || bare) {
-                holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                        .range(range)
-                        .textAttributes(TLSchemaSyntaxHighlighter.BareType)
-                        .create();
+                setHighlighting(range, holder, TLSchemaSyntaxHighlighter.BareType);
             } else {
-                holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                        .range(range)
-                        .textAttributes(TLSchemaSyntaxHighlighter.BoxedType)
-                        .create();
+                setHighlighting(range, holder, TLSchemaSyntaxHighlighter.BoxedType);
             }
         }
+    }
+
+    private static void setHighlighting(
+            @NotNull TextRange range,
+            @NotNull AnnotationHolder holder,
+            @NotNull TextAttributesKey key) {
+        holder.newSilentAnnotation(HighlightSeverity.INFORMATION).range(range).textAttributes(key).create();
     }
 }
