@@ -1,8 +1,6 @@
 package com.vk.tlschema.highlighting;
 
-import com.intellij.lang.annotation.Annotation;
-import com.intellij.lang.annotation.AnnotationHolder;
-import com.intellij.lang.annotation.Annotator;
+import com.intellij.lang.annotation.*;
 import com.intellij.openapi.editor.SyntaxHighlighterColors;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
@@ -27,15 +25,22 @@ public class TLSchemaAnnotator implements Annotator {
             if (identFull != null) {
                 TLSchemaLcIdentNs ident = identFull.getLcIdentNs();
                 TextRange range = ident.getTextRange();
-                Annotation annotation = holder.createInfoAnnotation(range, null);
-                annotation.setTextAttributes(TLSchemaSyntaxHighlighter.Constructor);
+
+                holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                        .range(range)
+                        .textAttributes(TLSchemaSyntaxHighlighter.Constructor)
+                        .create();
                 if (ident.getTextLength() != identFull.getTextLength()) {
                     TextRange range_num = new TextRange(ident.getTextOffset() + ident.getTextLength(), identFull.getTextOffset() + identFull.getTextLength());
-                    Annotation annotation_num = holder.createInfoAnnotation(range_num, null);
-                    annotation_num.setTextAttributes(TLSchemaSyntaxHighlighter.ConstructorHash);
+                    holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                            .range(range_num)
+                            .textAttributes(TLSchemaSyntaxHighlighter.ConstructorHash)
+                            .create();
                 } else {
                     if (TLSchemaPsiImplUtil.getDeclaration(ident).haveConditionalArgs()) {
-                        annotation = holder.createWarningAnnotation(range, "Constructor hash should be specified");
+                        holder.newAnnotation(HighlightSeverity.WARNING, "Constructor hash should be specified")
+                                .range(range)
+                                .create();
                     }
                 }
             }
@@ -45,8 +50,10 @@ public class TLSchemaAnnotator implements Annotator {
         }
         if (element instanceof TLSchemaConditionalDefImpl) {
             TextRange range = element.getTextRange();
-            Annotation annotation = holder.createInfoAnnotation(range, null);
-            annotation.setTextAttributes(TLSchemaSyntaxHighlighter.FieldsMask);
+            holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                    .range(range)
+                    .textAttributes(TLSchemaSyntaxHighlighter.FieldsMask)
+                    .create();
         }
         if (element instanceof TLSchemaAttributeNodeImpl) {
             PsiElement parent = element.getParent();
@@ -65,14 +72,16 @@ public class TLSchemaAnnotator implements Annotator {
                             if (!rw_attrs) {
                                 rw_attrs = true;
                             } else {
-                                holder.createErrorAnnotation(child.getTextRange(), "Only one read/write attribute allowed");
+                                holder.newAnnotation(HighlightSeverity.ERROR, "Only one read/write attribute allowed")
+                                        .range(child.getTextRange())
+                                        .create();
                             }
                         }
                     }
                 }
             }
             TextRange range = element.getTextRange();
-            Annotation annotation;
+            AnnotationBuilder annotation;
             boolean known = false;
             for (String name: Constants.validAnnotations) {
                 if (element.getText().equals(name)) {
@@ -80,10 +89,18 @@ public class TLSchemaAnnotator implements Annotator {
                     break;
                 }
             }
-            annotation = known ? holder.createInfoAnnotation(range, null) : holder.createErrorAnnotation(range, "Unknown Attribute");
+
             if (known) {
-                annotation.setTextAttributes(TLSchemaSyntaxHighlighter.Attribute);
+                annotation = holder.newSilentAnnotation(HighlightSeverity.INFORMATION).range(range);
+            } else {
+                annotation = holder.newAnnotation(HighlightSeverity.ERROR, "Unknown Attribute").range(range);
             }
+
+            if (known) {
+                annotation = annotation.textAttributes(TLSchemaSyntaxHighlighter.Attribute);
+            }
+
+            annotation.create();
         }
 
     }
@@ -101,21 +118,23 @@ public class TLSchemaAnnotator implements Annotator {
 
         if (element.getNatExpr() != null) {
             TLSchemaNatExpr expr = element.getNatExpr();
-            Annotation annotation;
+            AnnotationBuilder annotation;
             TextRange range = expr.getTextRange();
             if (percent) {
-                annotation = holder.createErrorAnnotation(range, "Percent can't be applied to number");
+                annotation = holder.newAnnotation(HighlightSeverity.ERROR, "Percent can't be applied to number").range(range);
             } else {
-                annotation = holder.createInfoAnnotation(range, null);
+                annotation = holder.newSilentAnnotation(HighlightSeverity.INFORMATION).range(range);
             }
-            annotation.setTextAttributes(SyntaxHighlighterColors.NUMBER);
+            annotation.textAttributes(SyntaxHighlighterColors.NUMBER).create();
             return;
         }
 
         if (element.getPercentTerm() != null) {
             if (percent) {
                 TextRange range = element.getTextRange();
-                holder.createErrorAnnotation(range, "Double percent");
+                holder.newAnnotation(HighlightSeverity.ERROR, "Double percent")
+                        .range(range)
+                        .create();
                 return;
             }
             AnnotateType((TLSchemaTermImpl) element.getPercentTerm().getTerm(), holder, true);
@@ -177,8 +196,10 @@ public class TLSchemaAnnotator implements Annotator {
         if (numVars != null) {
             for (TLSchemaVarIdent id : numVars) {
                 if (id.getText().equals(type)) {
-                    Annotation annotation = holder.createInfoAnnotation(range, null);
-                    annotation.setTextAttributes(TLSchemaSyntaxHighlighter.NumericVar);
+                    holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                            .range(range)
+                            .textAttributes(TLSchemaSyntaxHighlighter.NumericVar)
+                            .create();
                     return;
                 }
             }
@@ -193,18 +214,19 @@ public class TLSchemaAnnotator implements Annotator {
             }
         }
         if (cons.size() == 0 && !type.equals("#") && !type.equals("Type") && !type_arg) {
-            holder.createErrorAnnotation(range, "Unknown type");
+            holder.newAnnotation(HighlightSeverity.ERROR, "Unknown type").range(range).create();
         } else if (is_simple_type && !percent && !bare && !no_bare) {
-            holder.createWarningAnnotation(range, "This type can be made bare");
+            holder.newAnnotation(HighlightSeverity.WARNING, "This type can be made bare").range(range).create();
         } else if ((!is_simple_type || no_bare || type_arg) && (percent || bare)) {
-            holder.createErrorAnnotation(range, "This type can't be made bare");
+            holder.newAnnotation(HighlightSeverity.ERROR, "This type can't be made bare").range(range).create();
         } else {
-            Annotation annotation = holder.createInfoAnnotation(range, null);
+            AnnotationBuilder annotation = holder.newSilentAnnotation(HighlightSeverity.INFORMATION).range(range);
             if (percent || bare) {
-                annotation.setTextAttributes(TLSchemaSyntaxHighlighter.BareType);
+                annotation = annotation.textAttributes(TLSchemaSyntaxHighlighter.BareType);
             } else {
-                annotation.setTextAttributes(TLSchemaSyntaxHighlighter.BoxedType);
+                annotation = annotation.textAttributes(TLSchemaSyntaxHighlighter.BoxedType);
             }
+            annotation.create();
         }
     }
 }
