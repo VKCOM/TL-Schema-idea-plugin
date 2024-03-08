@@ -81,7 +81,6 @@ public class TLSchemaAnnotator implements Annotator {
                 }
             }
             TextRange range = element.getTextRange();
-            AnnotationBuilder annotation;
             boolean known = false;
             for (String name: Constants.validAnnotations) {
                 if (element.getText().equals(name)) {
@@ -91,16 +90,13 @@ public class TLSchemaAnnotator implements Annotator {
             }
 
             if (known) {
-                annotation = holder.newSilentAnnotation(HighlightSeverity.INFORMATION).range(range);
+                holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                        .range(range)
+                        .textAttributes(TLSchemaSyntaxHighlighter.Attribute)
+                        .create();
             } else {
-                annotation = holder.newAnnotation(HighlightSeverity.ERROR, "Unknown Attribute").range(range);
+                holder.newAnnotation(HighlightSeverity.ERROR, "Unknown Attribute").range(range).create();
             }
-
-            if (known) {
-                annotation = annotation.textAttributes(TLSchemaSyntaxHighlighter.Attribute);
-            }
-
-            annotation.create();
         }
 
     }
@@ -118,14 +114,17 @@ public class TLSchemaAnnotator implements Annotator {
 
         if (element.getNatExpr() != null) {
             TLSchemaNatExpr expr = element.getNatExpr();
-            AnnotationBuilder annotation;
             TextRange range = expr.getTextRange();
+            holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                    .range(range)
+                    .textAttributes(SyntaxHighlighterColors.NUMBER)
+                    .create();
             if (percent) {
-                annotation = holder.newAnnotation(HighlightSeverity.ERROR, "Percent can't be applied to number").range(range);
-            } else {
-                annotation = holder.newSilentAnnotation(HighlightSeverity.INFORMATION).range(range);
+                holder.newAnnotation(HighlightSeverity.ERROR, "Percent can't be applied to number")
+                        .range(range)
+                        .create();
             }
-            annotation.textAttributes(SyntaxHighlighterColors.NUMBER).create();
+
             return;
         }
 
@@ -220,13 +219,17 @@ public class TLSchemaAnnotator implements Annotator {
         } else if ((!is_simple_type || no_bare || type_arg) && (percent || bare)) {
             holder.newAnnotation(HighlightSeverity.ERROR, "This type can't be made bare").range(range).create();
         } else {
-            AnnotationBuilder annotation = holder.newSilentAnnotation(HighlightSeverity.INFORMATION).range(range);
             if (percent || bare) {
-                annotation = annotation.textAttributes(TLSchemaSyntaxHighlighter.BareType);
+                holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                        .range(range)
+                        .textAttributes(TLSchemaSyntaxHighlighter.BareType)
+                        .create();
             } else {
-                annotation = annotation.textAttributes(TLSchemaSyntaxHighlighter.BoxedType);
+                holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                        .range(range)
+                        .textAttributes(TLSchemaSyntaxHighlighter.BoxedType)
+                        .create();
             }
-            annotation.create();
         }
     }
 }
