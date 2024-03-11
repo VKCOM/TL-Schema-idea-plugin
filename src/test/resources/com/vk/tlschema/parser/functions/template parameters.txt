@@ -1,0 +1,6 @@
+TLSchema File
+  PsiComment(TLSchemaTokenType.COMMENT)('// TODO: correct, after correcting the grammar')
+  PsiWhiteSpace('\n')
+  PsiComment(TLSchemaTokenType.COMMENT)('// @read getPolygons dim:# user_id:int = (Polygon dim);')
+  TLSchemaConstructorDeclarationsImpl(CONSTRUCTOR_DECLARATIONS)
+    <empty list>

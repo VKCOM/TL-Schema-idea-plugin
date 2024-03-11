@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.kotlin) // Kotlin support
     alias(libs.plugins.gradleIntelliJPlugin) // Gradle IntelliJ Plugin
     alias(libs.plugins.changelog) // Gradle Changelog Plugin
+    alias(libs.plugins.kover) // Gradle Kover Plugin
     alias(libs.plugins.grammarkit) // Gradle Grammar-Kit Plugin
 }
 
@@ -53,6 +54,15 @@ changelog {
 sourceSets {
     main {
         java.srcDirs("src/main/gen")
+    }
+}
+
+// Configure Gradle Kover Plugin - read more: https://github.com/Kotlin/kotlinx-kover#configuration
+koverReport {
+    defaults {
+        xml {
+            onCheck = true
+        }
     }
 }
 
