@@ -1,16 +1,17 @@
 package com.vk.tlschema.highlighting;
 
-import com.intellij.lang.annotation.Annotation;
+import com.intellij.codeInspection.util.InspectionMessage;
 import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.Annotator;
+import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.openapi.editor.SyntaxHighlighterColors;
+import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.vk.tlschema.Constants;
 import com.vk.tlschema.psi.*;
 import com.vk.tlschema.psi.impl.*;
 import com.vk.tlschema.search.TLSchemaSearchUtils;
-import org.bouncycastle.util.Arrays;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -18,44 +19,46 @@ import java.util.List;
 public class TLSchemaAnnotator implements Annotator {
     @Override
     public void annotate(@NotNull final PsiElement element, @NotNull AnnotationHolder holder) {
-        if (element instanceof TLSchemaResultTypeImpl) {
-            ColorType(((TLSchemaResultTypeImpl) element).getBoxedTypeIdent(), holder, false, true);
+        if (element instanceof TLSchemaResultTypeImpl schemaResultType) {
+            ColorType(schemaResultType.getBoxedTypeIdent(), holder, false, true);
             return;
         }
-        if (element instanceof TLSchemaFullCombinatorIdImpl) {
-            TLSchemaLcIdentFull identFull = ((TLSchemaFullCombinatorIdImpl) element).getLcIdentFull();
+
+        if (element instanceof TLSchemaFullCombinatorIdImpl fullCombinatorId) {
+            TLSchemaLcIdentFull identFull = fullCombinatorId.getLcIdentFull();
             if (identFull != null) {
                 TLSchemaLcIdentNs ident = identFull.getLcIdentNs();
                 TextRange range = ident.getTextRange();
-                Annotation annotation = holder.createInfoAnnotation(range, null);
-                annotation.setTextAttributes(TLSchemaSyntaxHighlighter.Constructor);
+
+                setHighlighting(holder, range, TLSchemaSyntaxHighlighter.Constructor);
                 if (ident.getTextLength() != identFull.getTextLength()) {
                     TextRange range_num = new TextRange(ident.getTextOffset() + ident.getTextLength(), identFull.getTextOffset() + identFull.getTextLength());
-                    Annotation annotation_num = holder.createInfoAnnotation(range_num, null);
-                    annotation_num.setTextAttributes(TLSchemaSyntaxHighlighter.ConstructorHash);
+                    setHighlighting(holder, range_num, TLSchemaSyntaxHighlighter.ConstructorHash);
                 } else {
                     if (TLSchemaPsiImplUtil.getDeclaration(ident).haveConditionalArgs()) {
-                        annotation = holder.createWarningAnnotation(range, "Constructor hash should be specified");
+                        createWarningAnnotation(holder, range, "Constructor hash should be specified");
                     }
                 }
             }
         }
-        if (element instanceof TLSchemaTypeTermImpl) {
-            AnnotateType((TLSchemaTermImpl) ((TLSchemaTypeTermImpl) element).getTerm(), holder, false);
+
+        if (element instanceof TLSchemaTypeTermImpl typeTerm) {
+            AnnotateType((TLSchemaTermImpl) typeTerm.getTerm(), holder, false);
         }
+
         if (element instanceof TLSchemaConditionalDefImpl) {
             TextRange range = element.getTextRange();
-            Annotation annotation = holder.createInfoAnnotation(range, null);
-            annotation.setTextAttributes(TLSchemaSyntaxHighlighter.FieldsMask);
+            setHighlighting(holder, range, TLSchemaSyntaxHighlighter.FieldsMask);
         }
+
         if (element instanceof TLSchemaAttributeNodeImpl) {
             PsiElement parent = element.getParent();
             if (parent.getFirstChild() == element) {
                 boolean rw_attrs = false;
-                for (PsiElement child: parent.getChildren()) {
+                for (PsiElement child : parent.getChildren()) {
                     if (child instanceof TLSchemaAttributeNodeImpl) {
                         boolean is_rw = false;
-                        for (String name: Constants.rwAnnotations) {
+                        for (String name : Constants.rwAnnotations) {
                             if (child.getText().equals(name)) {
                                 is_rw = true;
                                 break;
@@ -65,24 +68,26 @@ public class TLSchemaAnnotator implements Annotator {
                             if (!rw_attrs) {
                                 rw_attrs = true;
                             } else {
-                                holder.createErrorAnnotation(child.getTextRange(), "Only one read/write attribute allowed");
+                                TextRange range = child.getTextRange();
+                                createErrorAnnotation(holder, range, "Only one read/write attribute allowed");
                             }
                         }
                     }
                 }
             }
             TextRange range = element.getTextRange();
-            Annotation annotation;
             boolean known = false;
-            for (String name: Constants.validAnnotations) {
+            for (String name : Constants.validAnnotations) {
                 if (element.getText().equals(name)) {
                     known = true;
                     break;
                 }
             }
-            annotation = known ? holder.createInfoAnnotation(range, null) : holder.createErrorAnnotation(range, "Unknown Attribute");
+
             if (known) {
-                annotation.setTextAttributes(TLSchemaSyntaxHighlighter.Attribute);
+                setHighlighting(holder, range, TLSchemaSyntaxHighlighter.Attribute);
+            } else {
+                createErrorAnnotation(holder, range, "Unknown Attribute");
             }
         }
 
@@ -101,21 +106,19 @@ public class TLSchemaAnnotator implements Annotator {
 
         if (element.getNatExpr() != null) {
             TLSchemaNatExpr expr = element.getNatExpr();
-            Annotation annotation;
             TextRange range = expr.getTextRange();
+            setHighlighting(holder, range, SyntaxHighlighterColors.NUMBER);
             if (percent) {
-                annotation = holder.createErrorAnnotation(range, "Percent can't be applied to number");
-            } else {
-                annotation = holder.createInfoAnnotation(range, null);
+                createErrorAnnotation(holder, range, "Percent can't be applied to number");
             }
-            annotation.setTextAttributes(SyntaxHighlighterColors.NUMBER);
+
             return;
         }
 
         if (element.getPercentTerm() != null) {
             if (percent) {
                 TextRange range = element.getTextRange();
-                holder.createErrorAnnotation(range, "Double percent");
+                createErrorAnnotation(holder, range, "Double percent");
                 return;
             }
             AnnotateType((TLSchemaTermImpl) element.getPercentTerm().getTerm(), holder, true);
@@ -160,12 +163,11 @@ public class TLSchemaAnnotator implements Annotator {
         if (is_simple_type) {
             TLSchemaResultType resultType = cons.get(0);
             PsiElement parent = resultType.getParent();
-            if (parent instanceof TLSchemaCombinatorDecl) {
-                TLSchemaCombinatorDecl decl = (TLSchemaCombinatorDecl) parent;
-                if (decl.getFullCombinatorId().getLcIdentFull() != null) {
-                    String name = decl.getFullCombinatorId().getLcIdentFull().getLcIdentNs().getName();
+            if (parent instanceof TLSchemaCombinatorDecl combinatorDecl) {
+                if (combinatorDecl.getFullCombinatorId().getLcIdentFull() != null) {
+                    String name = combinatorDecl.getFullCombinatorId().getLcIdentFull().getLcIdentNs().getName();
                     String type_name = resultType.getBoxedTypeIdent().getUcIdentNs().getName();
-                    if (name != null && type_name != null && !name.toLowerCase().equals(type_name.toLowerCase())) {
+                    if (name != null && type_name != null && !name.equalsIgnoreCase(type_name)) {
                         is_simple_type = false;
                     }
                 }
@@ -177,8 +179,7 @@ public class TLSchemaAnnotator implements Annotator {
         if (numVars != null) {
             for (TLSchemaVarIdent id : numVars) {
                 if (id.getText().equals(type)) {
-                    Annotation annotation = holder.createInfoAnnotation(range, null);
-                    annotation.setTextAttributes(TLSchemaSyntaxHighlighter.NumericVar);
+                    setHighlighting(holder, range, TLSchemaSyntaxHighlighter.NumericVar);
                     return;
                 }
             }
@@ -189,22 +190,43 @@ public class TLSchemaAnnotator implements Annotator {
             for (TLSchemaVarIdent id : typeVars) {
                 if (id.getText().equals(type)) {
                     type_arg = true;
+                    break;
                 }
             }
         }
-        if (cons.size() == 0 && !type.equals("#") && !type.equals("Type") && !type_arg) {
-            holder.createErrorAnnotation(range, "Unknown type");
+        if (cons.isEmpty() && !type.equals("#") && !type.equals("Type") && !type_arg) {
+            createErrorAnnotation(holder, range, "Unknown type");
         } else if (is_simple_type && !percent && !bare && !no_bare) {
-            holder.createWarningAnnotation(range, "This type can be made bare");
+            createWarningAnnotation(holder, range, "This type can be made bare");
         } else if ((!is_simple_type || no_bare || type_arg) && (percent || bare)) {
-            holder.createErrorAnnotation(range, "This type can't be made bare");
+            createErrorAnnotation(holder, range, "This type can't be made bare");
         } else {
-            Annotation annotation = holder.createInfoAnnotation(range, null);
             if (percent || bare) {
-                annotation.setTextAttributes(TLSchemaSyntaxHighlighter.BareType);
+                setHighlighting(holder, range, TLSchemaSyntaxHighlighter.BareType);
             } else {
-                annotation.setTextAttributes(TLSchemaSyntaxHighlighter.BoxedType);
+                setHighlighting(holder, range, TLSchemaSyntaxHighlighter.BoxedType);
             }
         }
+    }
+
+    private static void setHighlighting(
+            @NotNull AnnotationHolder holder,
+            @NotNull TextRange range,
+            @NotNull TextAttributesKey key) {
+        holder.newSilentAnnotation(HighlightSeverity.INFORMATION).range(range).textAttributes(key).create();
+    }
+
+    private static void createWarningAnnotation(
+            @NotNull AnnotationHolder holder,
+            @NotNull TextRange range,
+            @NotNull @InspectionMessage String message) {
+        holder.newAnnotation(HighlightSeverity.WARNING, message).range(range).create();
+    }
+
+    private static void createErrorAnnotation(
+            @NotNull AnnotationHolder holder,
+            @NotNull TextRange range,
+            @NotNull @InspectionMessage String message) {
+        holder.newAnnotation(HighlightSeverity.ERROR, message).range(range).create();
     }
 }
