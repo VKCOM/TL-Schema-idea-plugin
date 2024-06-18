@@ -3,43 +3,54 @@
     <name>TL Schema Support</name>
     <vendor email="unserialize.alias@gmail.com">Aleksandr Kirsanov</vendor>
 
-
     <description>Supports TL schema files coloring and several inspections</description>
 
-    <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
-         on how to target different products -->
     <depends>com.intellij.modules.lang</depends>
 
-
     <extensions defaultExtensionNs="com.intellij">
-        <fileTypeFactory implementation="com.vk.tlschema.TLSchemaFileTypeFactory"/>
+        <!-- File Type -->
+        <fileType language="TLSchema"
+                  name="TLSchema"
+                  implementationClass="com.vk.tlschema.TLSchemaFileType"
+                  fieldName="INSTANCE"
+                  extensions="tl"/>
+
+        <!-- Parser -->
         <lang.parserDefinition language="TLSchema" implementationClass="com.vk.tlschema.TLSchemaParserDefinition"/>
-        <lang.syntaxHighlighterFactory key="TLSchema"
-                                       implementationClass="com.vk.tlschema.highlighting.TLSchemaSyntaxHighlighterFactory"/>
-        <annotator language="TLSchema" implementationClass="com.vk.tlschema.highlighting.TLSchemaAnnotator"/>
-        <colorSettingsPage implementation="com.vk.tlschema.highlighting.TLSchemaColorSettingsPage"/>
-        <lang.psiStructureViewFactory language="TLSchema"
-                                      implementationClass="com.vk.tlschema.structures.TLSchemaStructureViewFactory"/>
+
+        <!-- Syntax Highlighter -->
+        <lang.syntaxHighlighter language="TLSchema"
+                                implementationClass="com.vk.tlschema.highlighting.TLSchemaSyntaxHighlighter"/>
+
+        <!-- Commenter -->
         <lang.commenter language="TLSchema" implementationClass="com.vk.tlschema.TLSchemaCommenter"/>
-        <psi.referenceContributor implementation="com.vk.tlschema.references.TLSchemaReferenceContributor"/>
+
+        <!-- Refactoring -->
+        <lang.namesValidator language="TLSchema" implementationClass="com.vk.tlschema.psi.TLSchemaNamesValidator"/>
+
+        <!-- Usages Provider -->
         <lang.findUsagesProvider language="TLSchema"
                                  implementationClass="com.vk.tlschema.search.TLSchemaFindUsagesProvider"/>
-        <lang.namesValidator language="TLSchema" implementationClass="com.vk.tlschema.psi.TLSchemaNamesValidator"/>
+
+        <!-- Structure View -->
+        <lang.psiStructureViewFactory language="TLSchema"
+                                      implementationClass="com.vk.tlschema.structures.TLSchemaStructureViewFactory"/>
+
+        <!-- Resolve -->
+        <psi.referenceContributor language="TLSchema"
+                                  implementation="com.vk.tlschema.references.TLSchemaReferenceContributor"/>
+
+        <!-- Annotator -->
+        <annotator language="TLSchema" implementationClass="com.vk.tlschema.highlighting.TLSchemaAnnotator"/>
+
+        <!-- Color Settings -->
+        <colorSettingsPage implementation="com.vk.tlschema.highlighting.TLSchemaColorSettingsPage"/>
+
+        <!-- Navigation -->
         <gotoSymbolContributor implementation="com.vk.tlschema.search.TLSchemaChooseByNameContributor"/>
+
+        <!-- Description Provider -->
         <breadcrumbsInfoProvider implementation="com.vk.tlschema.highlighting.TLSchemaBreadcrumbsProvider"/>
-        <!-- Add your extensions here -->
     </extensions>
-
-    <application-components>
-        <!-- Add your application components here -->
-    </application-components>
-
-    <project-components>
-        <!-- Add your project components here -->
-    </project-components>
-
-    <actions>
-        <!-- Add your actions here -->
-    </actions>
 
 </idea-plugin>
