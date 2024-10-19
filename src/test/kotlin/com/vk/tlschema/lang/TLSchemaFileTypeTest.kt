@@ -4,7 +4,7 @@ import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import com.vk.tlschema.TLSchemaFileType
 
 class TLSchemaFileTypeTest : BasePlatformTestCase() {
-    private val fileType = TLSchemaFileType.INSTANCE
+    private val fileType = TLSchemaFileType
 
     fun `test combined_tl file`() = toTest("combined.tl")
 
