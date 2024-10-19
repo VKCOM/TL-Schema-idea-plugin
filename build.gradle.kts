@@ -68,18 +68,17 @@ koverReport {
 
 tasks {
     generateLexer {
-        sourceFile = file("src/main/grammars/TLShcema.flex")
-        targetDir = "src/main/gen/com/vk/tlschema"
-        targetClass = "TLSchemaLexer"
-        purgeOldFiles = true
+        sourceFile.set(file("src/main/grammars/TLShcema.flex"))
+        targetOutputDir.set(file("src/main/gen/com/vk/tlschema"))
+        purgeOldFiles.set(true)
     }
 
     generateParser {
-        sourceFile = file("src/main/grammars/TLSchema.bnf")
-        targetRoot = "src/main/gen"
-        pathToParser = "/com/vk/tlschema/parser/TLSchemaParser.java"
-        pathToPsiRoot = "/com/vk/tlschema/psi"
-        purgeOldFiles = true
+        sourceFile.set(file("src/main/grammars/TLSchema.bnf"))
+        targetRootOutputDir.set(file("src/main/gen"))
+        pathToParser.set("/com/vk/tlschema/parser/TLSchemaParser.java")
+        pathToPsiRoot.set("/com/vk/tlschema/psi")
+        purgeOldFiles.set(true)
     }
 
     withType<KotlinCompile> {

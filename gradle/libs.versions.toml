@@ -7,7 +7,7 @@ kotlin = "1.9.21"
 changelog = "2.2.0"
 gradleIntelliJPlugin = "1.16.1"
 kover = "0.7.5"
-grammarkit = "2022.3.2.1"
+grammarkit = "2022.3.2.2"
 
 [libraries]
 annotations = { group = "org.jetbrains", name = "annotations", version.ref = "annotations" }
