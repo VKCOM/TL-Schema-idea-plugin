@@ -74,6 +74,8 @@ tasks {
     }
 
     generateParser {
+        dependsOn(generateLexer)
+
         sourceFile.set(file("src/main/grammars/TLSchema.bnf"))
         targetRootOutputDir.set(file("src/main/gen"))
         pathToParser.set("/com/vk/tlschema/parser/TLSchemaParser.java")
@@ -82,7 +84,7 @@ tasks {
     }
 
     withType<KotlinCompile> {
-        dependsOn(generateLexer, generateParser)
+        dependsOn(generateParser)
     }
 
     wrapper {
