@@ -6,8 +6,6 @@ import com.intellij.navigation.ItemPresentation
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiReference
 import com.vk.tlschema.psi.TLSchemaDeclaration
-import com.vk.tlschema.psi.TLSchemaNamespaceIdent
-import com.vk.tlschema.psi.TLSchemaUcIdentNode
 import com.vk.tlschema.psi.TLSchemaUcIdentNs
 import com.vk.tlschema.psi.impl.TLSchemaPsiImplUtil
 
@@ -18,14 +16,6 @@ internal abstract class TLSchemaUcIdentNsMixin(node: ASTNode) : ASTWrapperPsiEle
 
     override fun getName(): String? {
         return TLSchemaPsiImplUtil.getName(this)
-    }
-
-    override fun getUcIdentNode(): TLSchemaUcIdentNode {
-        return findNotNullChildByClass(TLSchemaUcIdentNode::class.java)
-    }
-
-    override fun getNamespaceIdent(): TLSchemaNamespaceIdent? {
-        return findChildByClass(TLSchemaNamespaceIdent::class.java)
     }
 
     override fun getDeclaration(): TLSchemaDeclaration? {
