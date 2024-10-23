@@ -1,6 +1,5 @@
 package com.vk.tlschema.psi.mixins
 
-import com.intellij.extapi.psi.ASTWrapperPsiElement
 import com.intellij.lang.ASTNode
 import com.intellij.navigation.ItemPresentation
 import com.intellij.psi.PsiElement
@@ -9,7 +8,7 @@ import com.vk.tlschema.psi.TLSchemaDeclaration
 import com.vk.tlschema.psi.TLSchemaVarIdent
 import com.vk.tlschema.psi.impl.TLSchemaPsiImplUtil
 
-internal abstract class TLSchemaVarIdentMixin(node: ASTNode) : ASTWrapperPsiElement(node), TLSchemaVarIdent {
+internal abstract class TLSchemaVarIdentMixin(node: ASTNode) : TLSchemaElementMixin(node), TLSchemaVarIdent {
     override fun setName(newName: String): PsiElement {
         return TLSchemaPsiImplUtil.setName(this, newName)
     }
