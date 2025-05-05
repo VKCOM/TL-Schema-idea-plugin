@@ -11,12 +11,10 @@
   elementTypeHolderClass="com.vk.tlschema.psi.TLSchemaTypes"
   elementTypeClass="com.vk.tlschema.psi.TLSchemaElementType"
   tokenTypeClass="com.vk.tlschema.psi.TLSchemaTokenType"
-
-  psiImplUtilClass="com.vk.tlschema.psi.impl.TLSchemaPsiImplUtil"
 }
 
 
-TLShemaFile ::= constructor_declarations [ ((TRIPPLE_MINUS FUNCTIONS_KW TRIPPLE_MINUS fun_declarations) | (TRIPPLE_MINUS TYPES_KW TRIPPLE_MINUS constructor_declarations)) *]
+TLSchemaFile ::= constructor_declarations [ ((TRIPPLE_MINUS FUNCTIONS_KW TRIPPLE_MINUS fun_declarations) | (TRIPPLE_MINUS TYPES_KW TRIPPLE_MINUS constructor_declarations)) *]
 
 comment_node ::= COMMENT
 
@@ -26,20 +24,42 @@ lc_ident_node ::= LC_IDENT
 attribute_node ::= ATTRIBUTE;
 
 namespace_ident ::= LC_IDENT
+
 lc_ident_ns ::= [ namespace_ident DOT ] lc_ident_node {
-                                                       mixin="com.vk.tlschema.psi.impl.TLSchemaNamedElementImpl"
-                                                       implements="com.vk.tlschema.psi.TLSchemaNamedElement"
-                                                       methods=[getName setName getReference getReferences getPresentation getDeclaration]}
+    implements=[
+        "com.vk.tlschema.psi.TLSchemaNamedElement"
+        "com.vk.tlschema.psi.TLSchemaDeclarationBase"
+    ]
+    mixin="com.vk.tlschema.psi.mixins.TLSchemaLcIdentNsMixin"
+}
+
 uc_ident_ns ::= [ namespace_ident DOT ] uc_ident_node {
-                                                       mixin="com.vk.tlschema.psi.impl.TLSchemaNamedElementImpl"
-                                                       implements="com.vk.tlschema.psi.TLSchemaNamedElement"
-                                                       methods=[getName setName getReference getReferences getPresentation getDeclaration]}
-lc_ident_full ::= lc_ident_ns [ SHARP_HEX_NUMBER ] {methods=[getDeclaration]}
+    implements=[
+        "com.vk.tlschema.psi.TLSchemaNamedElement"
+        "com.vk.tlschema.psi.TLSchemaDeclarationBase"
+    ]
+    mixin="com.vk.tlschema.psi.mixins.TLSchemaUcIdentNsMixin"
+}
 
-constructor_declarations ::= [ declaration * ] {methods=[getNamespaces]}
-fun_declarations ::= [ declaration  * ] {methods=[getNamespaces]}
+lc_ident_full ::= lc_ident_ns [ SHARP_HEX_NUMBER ] {
+    implements="com.vk.tlschema.psi.TLSchemaDeclarationBase"
+    mixin="com.vk.tlschema.psi.mixins.TLSchemaLcIdentFullMixin"
+}
 
-declaration ::= combinator_decl | combinator_decl_builtin {methods=[getCombinator getResultType getNumVars getTypeVars haveConditionalArgs getNamespace]}
+constructor_declarations ::= [ declaration * ] {
+    implements="com.vk.tlschema.psi.TLSchemaNamespacesElement"
+    mixin="com.vk.tlschema.psi.mixins.TLSchemaConstructorDeclarationsMixin"
+}
+
+fun_declarations ::= [ declaration  * ] {
+    implements="com.vk.tlschema.psi.TLSchemaNamespacesElement"
+    mixin="com.vk.tlschema.psi.mixins.TLSchemaFunDeclarationsMixin"
+}
+
+declaration ::= combinator_decl | combinator_decl_builtin {
+    implements="com.vk.tlschema.psi.TLSchemaDeclarationElement"
+    mixin="com.vk.tlschema.psi.mixins.TLSchemaDeclarationMixin"
+}
 
 combinator_decl_builtin ::= combinator_decl_builtin_type;
 
@@ -55,10 +75,15 @@ type_with_triangle_braces ::= type_ident LEQ type_expr [ (COMA type_expr) * ] GE
 percent_term ::= PERCENT term
 type_ident ::= boxed_type_ident | lc_ident_ns | SHARP
 boxed_type_ident ::= uc_ident_ns
+
 var_ident ::= lc_ident_node | uc_ident_node {
-                                             mixin="com.vk.tlschema.psi.impl.TLSchemaNamedElementImpl"
-                                             implements="com.vk.tlschema.psi.TLSchemaNamedElement"
-                                             methods=[getName setName getReference getReferences getPresentation getDeclaration]}
+    implements=[
+        "com.vk.tlschema.psi.TLSchemaNamedElement"
+        "com.vk.tlschema.psi.TLSchemaDeclarationBase"
+    ]
+    mixin="com.vk.tlschema.psi.mixins.TLSchemaVarIdentMixin"
+}
+
 type_term ::= term
 nat_term ::= nat_expr
 
@@ -75,4 +100,8 @@ type_term_exc ::= type_term | EXCMARK type_term
 multiplicity ::= nat_term
 var_ident_opt ::= var_ident | UNDERSCORE
 conditional_def ::= var_ident [ DOT NAT_CONST ] QMARK
-result_type ::= (boxed_type_ident LEQ type_expr [ (COMA type_expr ) * ] GEQ) | (boxed_type_ident [type_expr]) {methods=[getDeclaration]}
+
+result_type ::= (boxed_type_ident LEQ type_expr [ (COMA type_expr ) * ] GEQ) | (boxed_type_ident [type_expr]) {
+    implements="com.vk.tlschema.psi.TLSchemaDeclarationBase"
+    mixin="com.vk.tlschema.psi.mixins.TLSchemaResultTypeMixin"
+}
