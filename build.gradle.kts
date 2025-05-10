@@ -87,6 +87,10 @@ tasks {
         dependsOn(generateParser)
     }
 
+    buildSearchableOptions {
+        enabled = false
+    }
+
     wrapper {
         gradleVersion = properties("gradleVersion").get()
     }
