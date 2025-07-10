@@ -20,7 +20,7 @@ public abstract class TLSchemaNamedElementReferenceBase extends PsiReferenceBase
         if (!(element instanceof PsiNamedElement)) {
             return false;
         }
-        String name1 = ((PsiNamedElement)element).getName();
+        String name1 = ((PsiNamedElement) element).getName();
         String myName = myElement.getName();
         if (name1 == null || !name1.equals(myName)) {
             return false;
@@ -28,11 +28,15 @@ public abstract class TLSchemaNamedElementReferenceBase extends PsiReferenceBase
 
         // TODO wtf?!?!
         PsiReference[] references = ReferenceProvidersRegistry.getReferencesFromProviders(element);
-        if (references.length == 0) { return false; }
+        if (references.length == 0) {
+            return false;
+        }
         PsiReference reference = references[0];
         if (reference instanceof PsiPolyVariantReferenceBase) {
             ResolveResult[] resolveResults = ((PsiPolyVariantReferenceBase) reference).multiResolve(false);
-            if (resolveResults.length == 0) { return false; }
+            if (resolveResults.length == 0) {
+                return false;
+            }
             element = resolveResults[0].getElement();
         } else {
             element = references[0].resolve();
