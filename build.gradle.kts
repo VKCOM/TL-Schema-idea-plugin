@@ -70,7 +70,12 @@ intellijPlatform {
 
         ideaVersion {
             sinceBuild = providers.gradleProperty("pluginSinceBuild")
-            untilBuild = providers.gradleProperty("pluginUntilBuild")
+
+            // We want to support all future versions, so we need to use a null provider here.
+            // Without this, we cannot pass the `Plugin Verifier`.
+            val pluginUntilBuild = providers.gradleProperty("pluginUntilBuild")
+                .takeUnless { it.orNull.isNullOrBlank() } ?: provider { null }
+            untilBuild = pluginUntilBuild
         }
     }
 
