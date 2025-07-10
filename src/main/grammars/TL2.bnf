@@ -15,4 +15,4 @@
 
 TL2File ::= (DanilNode COMA)*
 
-DanilNode ::= NAT_CONST32 NAT_CONST64
+DanilNode ::= NAT_CONST

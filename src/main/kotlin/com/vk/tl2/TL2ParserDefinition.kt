@@ -12,7 +12,7 @@ import com.vk.tl2.psi.TL2File
 import com.vk.tl2.psi.TL2Types
 
 class TL2ParserDefinition : ParserDefinition {
-    override fun createLexer(project: Project) = TL2LexerAdapter()
+    override fun createLexer(project: Project) = TL2Lexer()
 
     override fun createParser(project: Project) = TL2Parser()
 
