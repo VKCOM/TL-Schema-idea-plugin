@@ -7,7 +7,13 @@ import com.intellij.psi.TokenType;
 
 %%
 
-%class TL2Lexer
+%{
+  public _TL2Lexer() {
+    this((java.io.Reader)null);
+ }
+%}
+
+%class _TL2Lexer
 %implements FlexLexer
 %unicode
 %function advance
