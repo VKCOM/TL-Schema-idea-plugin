@@ -1,4 +1,6 @@
 import org.jetbrains.changelog.Changelog
+import org.jetbrains.grammarkit.tasks.GenerateLexerTask
+import org.jetbrains.grammarkit.tasks.GenerateParserTask
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -104,21 +106,43 @@ kover {
     }
 }
 
+val generateTLSchemaLexer = task<GenerateLexerTask>("generateTLSchemaLexer") {
+    sourceFile.set(file("src/main/grammars/TLShcema.flex"))
+    targetOutputDir.set(file("src/main/gen/com/vk/tlschema"))
+    purgeOldFiles.set(true)
+}
+
+val generateTLSchemaParser = task<GenerateParserTask>("generateTLSchemaParser") {
+    sourceFile.set(file("src/main/grammars/TLSchema.bnf"))
+    targetRootOutputDir.set(file("src/main/gen"))
+    pathToParser.set("/com/vk/tlschema/parser/TLSchemaParser.java")
+    pathToPsiRoot.set("/com/vk/tlschema/psi")
+    purgeOldFiles.set(true)
+}
+
+val generateTL2Lexer = task<GenerateLexerTask>("generateTL2Lexer") {
+    sourceFile.set(file("src/main/grammars/TL2.flex"))
+    targetOutputDir.set(file("src/main/gen/com/vk/tl2"))
+    purgeOldFiles.set(true)
+}
+
+val generateTL2Parser = task<GenerateParserTask>("generateTL2Parser") {
+    sourceFile.set(file("src/main/grammars/TL2.bnf"))
+    targetRootOutputDir.set(file("src/main/gen"))
+    pathToParser.set("/com/vk/tl2/parser/TL2Parser.java")
+    pathToPsiRoot.set("/com/vk/tl2/psi")
+    purgeOldFiles.set(true)
+}
+
 tasks {
     generateLexer {
-        sourceFile.set(file("src/main/grammars/TLShcema.flex"))
-        targetOutputDir.set(file("src/main/gen/com/vk/tlschema"))
-        purgeOldFiles.set(true)
+        dependsOn(generateTLSchemaLexer, generateTL2Lexer)
+        enabled = false
     }
 
     generateParser {
-        dependsOn(generateLexer)
-
-        sourceFile.set(file("src/main/grammars/TLSchema.bnf"))
-        targetRootOutputDir.set(file("src/main/gen"))
-        pathToParser.set("/com/vk/tlschema/parser/TLSchemaParser.java")
-        pathToPsiRoot.set("/com/vk/tlschema/psi")
-        purgeOldFiles.set(true)
+        dependsOn(generateLexer, generateTLSchemaParser, generateTL2Parser)
+        enabled = false
     }
 
     withType<KotlinCompile> {
