@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## 1.5.0 — 14.07.2025
+
+- Added the **first** tests
+- Highlighted the separate `Mixin` and `PsiElement`
+
 ## 1.4.0 — 12.02.2024
 
 - Moved project to Gradle
