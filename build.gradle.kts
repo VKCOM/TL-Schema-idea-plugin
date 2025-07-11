@@ -110,7 +110,7 @@ kover {
 }
 
 val deleteGenerateFiles = task<Delete>("deleteGenerateFiles") {
-    delete("src/gen/java")
+    delete("src/main/gen")
 }
 
 tasks {
