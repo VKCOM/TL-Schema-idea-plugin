@@ -24,7 +24,7 @@ class TLSchemaSyntaxHighlighter extends SyntaxHighlighterBase {
     public static final TextAttributesKey Constructor = createTextAttributesKey("TLSCHEMA_CONSTRUCTOR", DefaultLanguageHighlighterColors.KEYWORD);
     public static final TextAttributesKey ConstructorHash = createTextAttributesKey("TLSCHEMA_CONSTRUCTOR_HASH", DefaultLanguageHighlighterColors.NUMBER);
     public static final TextAttributesKey FieldsMask = createTextAttributesKey("TLSCHEMA_FIELDS_MASK", DefaultLanguageHighlighterColors.STRING);
-    public static final TextAttributesKey Attribute = createTextAttributesKey("TLSCHEMA_ATTRIBUTE",  DefaultLanguageHighlighterColors.METADATA);
+    public static final TextAttributesKey Attribute = createTextAttributesKey("TLSCHEMA_ATTRIBUTE", DefaultLanguageHighlighterColors.METADATA);
     private static final TextAttributesKey COMMENT = createTextAttributesKey("TLSCHEMA_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT);
     private static final TextAttributesKey BAD_CHARACTER = createTextAttributesKey("TLSCHEMA_BAD_CHARACTER", new TextAttributes(JBColor.RED, null, null, null, Font.BOLD));
     private static final TextAttributesKey[] BAD_CHAR_KEYS = new TextAttributesKey[]{BAD_CHARACTER};

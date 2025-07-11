@@ -11,6 +11,7 @@ import com.vk.tlschema.TLSchemaFileType;
 import com.vk.tlschema.psi.*;
 import com.vk.tlschema.psi.impl.TLSchemaRecursiveVisitor;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -45,7 +46,7 @@ public class TLSchemaSearchUtils {
         return result != null ? result : Collections.<TLSchemaResultType>emptyList();
     }
 
-    public static TLSchemaLcIdentNs findCombinator(Project project, String key) {
+    public static @Nullable TLSchemaLcIdentNs findCombinator(Project project, String key) {
         Collection<VirtualFile> virtualFiles = FileBasedIndex.getInstance().getContainingFiles(FileTypeIndex.NAME, TLSchemaFileType.INSTANCE,
                 GlobalSearchScope.allScope(project));
         for (VirtualFile virtualFile : virtualFiles) {
