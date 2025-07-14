@@ -109,7 +109,15 @@ kover {
     }
 }
 
+val deleteGenerateFiles = task<Delete>("deleteGenerateFiles") {
+    delete("src/main/gen")
+}
+
 tasks {
+    buildPlugin {
+        dependsOn(deleteGenerateFiles)
+    }
+
     generateLexer {
         sourceFile.set(file("src/main/grammars/TLShcema.flex"))
         targetOutputDir.set(file("src/main/gen/com/vk/tlschema"))
