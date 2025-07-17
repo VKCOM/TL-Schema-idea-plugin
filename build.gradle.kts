@@ -50,6 +50,14 @@ dependencies {
     }
 }
 
+val generatedSourceDir = file("src/main/gen")
+
+idea {
+    module {
+        generatedSourceDirs.add(generatedSourceDir)
+    }
+}
+
 // Configure IntelliJ Platform Gradle Plugin - read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-extension.html
 intellijPlatform {
     pluginConfiguration {
@@ -95,7 +103,9 @@ changelog {
 
 sourceSets {
     main {
-        java.srcDirs("src/main/gen")
+        java {
+            srcDirs(generatedSourceDir)
+        }
     }
 }
 
@@ -110,40 +120,40 @@ kover {
     }
 }
 
-val deleteGenerateFiles = task<Delete>("deleteGenerateFiles") {
-    delete("src/main/gen")
+val deleteGenerateFiles = tasks.register<Delete>("deleteGenerateFiles") {
+    delete(generatedSourceDir)
 }
 
-val generateTLSchemaLexer = task<GenerateLexerTask>("generateTLSchemaLexer") {
+val generateTLSchemaLexer = tasks.register<GenerateLexerTask>("generateTLSchemaLexer") {
     sourceFile.set(file("src/main/grammars/TLShcema.flex"))
     targetOutputDir.set(file("src/main/gen/com/vk/tlschema"))
     purgeOldFiles.set(true)
 }
 
-val generateTLSchemaParser = task<GenerateParserTask>("generateTLSchemaParser") {
+val generateTLSchemaParser = tasks.register<GenerateParserTask>("generateTLSchemaParser") {
     sourceFile.set(file("src/main/grammars/TLSchema.bnf"))
-    targetRootOutputDir.set(file("src/main/gen"))
+    targetRootOutputDir.set(generatedSourceDir)
     pathToParser.set("/com/vk/tlschema/parser/TLSchemaParser.java")
     pathToPsiRoot.set("/com/vk/tlschema/psi")
     purgeOldFiles.set(true)
 }
 
-val generateTL2Lexer = task<GenerateLexerTask>("generateTL2Lexer") {
+val generateTL2Lexer = tasks.register<GenerateLexerTask>("generateTL2Lexer") {
     sourceFile.set(file("src/main/grammars/TL2.flex"))
     targetOutputDir.set(file("src/main/gen/com/vk/tl2"))
     purgeOldFiles.set(true)
 }
 
-val generateTL2Parser = task<GenerateParserTask>("generateTL2Parser") {
+val generateTL2Parser = tasks.register<GenerateParserTask>("generateTL2Parser") {
     sourceFile.set(file("src/main/grammars/TL2.bnf"))
-    targetRootOutputDir.set(file("src/main/gen"))
+    targetRootOutputDir.set(generatedSourceDir)
     pathToParser.set("/com/vk/tl2/parser/TL2Parser.java")
     pathToPsiRoot.set("/com/vk/tl2/psi")
     purgeOldFiles.set(true)
 }
 
 tasks {
-    buildPlugin {
+    clean {
         dependsOn(deleteGenerateFiles)
     }
 
