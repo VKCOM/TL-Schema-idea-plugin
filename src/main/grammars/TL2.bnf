@@ -11,8 +11,12 @@
   elementTypeHolderClass="com.vk.tl2.psi.TL2Types"
   elementTypeClass="com.vk.tl2.psi.TL2ElementType"
   tokenTypeClass="com.vk.tl2.psi.TL2TokenType"
+
+  tokens = [
+    COMMA  =  ','
+  ]
 }
 
-TL2File ::= (DanilNode COMA)*
+TL2File ::= integer*
 
-DanilNode ::= NAT_CONST
+integer ::= (INT_NUMBER (COMMA INT_NUMBER)*)
