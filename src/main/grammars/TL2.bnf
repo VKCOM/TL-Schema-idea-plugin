@@ -1,0 +1,22 @@
+{
+  parserClass="com.vk.tl2.parser.TL2Parser"
+
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="TL2"
+  psiImplClassSuffix="Impl"
+  psiPackage="com.vk.tl2.psi"
+  psiImplPackage="com.vk.tl2.psi.impl"
+
+  elementTypeHolderClass="com.vk.tl2.psi.TL2Types"
+  elementTypeClass="com.vk.tl2.psi.TL2ElementType"
+  tokenTypeClass="com.vk.tl2.psi.TL2TokenType"
+
+  tokens = [
+    COMMA  =  ','
+  ]
+}
+
+TL2File ::= integer*
+
+integer ::= (INT_NUMBER (COMMA INT_NUMBER)*)

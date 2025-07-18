@@ -1,4 +1,6 @@
 import org.jetbrains.changelog.Changelog
+import org.jetbrains.grammarkit.tasks.GenerateLexerTask
+import org.jetbrains.grammarkit.tasks.GenerateParserTask
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -48,6 +50,14 @@ dependencies {
     }
 }
 
+val generatedSourceDir = file("src/main/gen")
+
+idea {
+    module {
+        generatedSourceDirs.add(generatedSourceDir)
+    }
+}
+
 // Configure IntelliJ Platform Gradle Plugin - read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-extension.html
 intellijPlatform {
     pluginConfiguration {
@@ -93,7 +103,9 @@ changelog {
 
 sourceSets {
     main {
-        java.srcDirs("src/main/gen")
+        java {
+            srcDirs(generatedSourceDir)
+        }
     }
 }
 
@@ -108,29 +120,51 @@ kover {
     }
 }
 
-val deleteGenerateFiles = task<Delete>("deleteGenerateFiles") {
-    delete("src/main/gen")
+val deleteGenerateFiles = tasks.register<Delete>("deleteGenerateFiles") {
+    delete(generatedSourceDir)
+}
+
+val generateTLSchemaLexer = tasks.register<GenerateLexerTask>("generateTLSchemaLexer") {
+    sourceFile.set(file("src/main/grammars/TLShcema.flex"))
+    targetOutputDir.set(file("src/main/gen/com/vk/tlschema"))
+    purgeOldFiles.set(true)
+}
+
+val generateTLSchemaParser = tasks.register<GenerateParserTask>("generateTLSchemaParser") {
+    sourceFile.set(file("src/main/grammars/TLSchema.bnf"))
+    targetRootOutputDir.set(generatedSourceDir)
+    pathToParser.set("/com/vk/tlschema/parser/TLSchemaParser.java")
+    pathToPsiRoot.set("/com/vk/tlschema/psi")
+    purgeOldFiles.set(true)
+}
+
+val generateTL2Lexer = tasks.register<GenerateLexerTask>("generateTL2Lexer") {
+    sourceFile.set(file("src/main/grammars/TL2.flex"))
+    targetOutputDir.set(file("src/main/gen/com/vk/tl2"))
+    purgeOldFiles.set(true)
+}
+
+val generateTL2Parser = tasks.register<GenerateParserTask>("generateTL2Parser") {
+    sourceFile.set(file("src/main/grammars/TL2.bnf"))
+    targetRootOutputDir.set(generatedSourceDir)
+    pathToParser.set("/com/vk/tl2/parser/TL2Parser.java")
+    pathToPsiRoot.set("/com/vk/tl2/psi")
+    purgeOldFiles.set(true)
 }
 
 tasks {
-    buildPlugin {
+    clean {
         dependsOn(deleteGenerateFiles)
     }
 
     generateLexer {
-        sourceFile.set(file("src/main/grammars/TLShcema.flex"))
-        targetOutputDir.set(file("src/main/gen/com/vk/tlschema"))
-        purgeOldFiles.set(true)
+        dependsOn(generateTLSchemaLexer, generateTL2Lexer)
+        enabled = false
     }
 
     generateParser {
-        dependsOn(generateLexer)
-
-        sourceFile.set(file("src/main/grammars/TLSchema.bnf"))
-        targetRootOutputDir.set(file("src/main/gen"))
-        pathToParser.set("/com/vk/tlschema/parser/TLSchemaParser.java")
-        pathToPsiRoot.set("/com/vk/tlschema/psi")
-        purgeOldFiles.set(true)
+        dependsOn(generateLexer, generateTLSchemaParser, generateTL2Parser)
+        enabled = false
     }
 
     withType<KotlinCompile> {

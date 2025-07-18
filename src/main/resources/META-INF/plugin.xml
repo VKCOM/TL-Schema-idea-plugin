@@ -7,6 +7,7 @@
 
     <depends>com.intellij.modules.lang</depends>
 
+    <!-- tl1 Group (old) -->
     <extensions defaultExtensionNs="com.intellij">
         <!-- File Type -->
         <fileType language="TLSchema"
@@ -51,6 +52,39 @@
 
         <!-- Description Provider -->
         <breadcrumbsInfoProvider implementation="com.vk.tlschema.highlighting.TLSchemaBreadcrumbsProvider"/>
+    </extensions>
+
+    <!-- tl2 Group -->
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- File Type -->
+        <fileType language="TL2"
+                  name="TL2"
+                  implementationClass="com.vk.tl2.TL2FileType"
+                  fieldName="INSTANCE"
+                  extensions="tl2"/>
+
+        <!-- Parser -->
+        <lang.parserDefinition language="TL2" implementationClass="com.vk.tl2.TL2ParserDefinition"/>
+
+        <!-- Syntax Highlighter -->
+
+        <!-- Commenter -->
+
+        <!-- Refactoring -->
+
+        <!-- Usages Provider -->
+
+        <!-- Structure View -->
+
+        <!-- Resolve -->
+
+        <!-- Annotator -->
+
+        <!-- Color Settings -->
+
+        <!-- Navigation -->
+
+        <!-- Description Provider -->
     </extensions>
 
 </idea-plugin>
