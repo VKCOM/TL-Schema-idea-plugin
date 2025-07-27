@@ -26,11 +26,15 @@ import static com.vk.tl2.psi.TL2Types.*;
 WHITE_SPACE=\s+
 INT_NUMBER = [0-9] [0-9_]*
 
+LINE_COMMENT = "//" [^\r\n]*
+
 %%
 <YYINITIAL> {
   ","                          { return COMMA; }
 
   {INT_NUMBER}                 { return INT_NUMBER; }
+
+  {LINE_COMMENT}               { return LINE_COMMENT; }
 
   {WHITE_SPACE}                { return WHITE_SPACE; }
 }
