@@ -9,6 +9,7 @@ import com.intellij.psi.tree.IFileElementType
 import com.intellij.psi.tree.TokenSet
 import com.vk.tl2.parser.TL2Parser
 import com.vk.tl2.psi.TL2File
+import com.vk.tl2.psi.TL2TokenSets
 import com.vk.tl2.psi.TL2Types
 
 class TL2ParserDefinition : ParserDefinition {
@@ -18,9 +19,7 @@ class TL2ParserDefinition : ParserDefinition {
 
     override fun getFileNodeType() = IFileElementType(TL2Language)
 
-    override fun getCommentTokens(): TokenSet {
-        return TokenSet.EMPTY
-    }
+    override fun getCommentTokens() = TL2TokenSets.COMMENTS
 
     override fun getStringLiteralElements(): TokenSet {
         return TokenSet.EMPTY
