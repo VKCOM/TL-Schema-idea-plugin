@@ -10,11 +10,14 @@ import org.junit.Test
 class TL2ArchitectureTest {
     private val projectScope = Konsist.scopeFromProject()
 
+    private val tl1Package = "com.vk.tlschema.."
+    private val tl2Package = "com.vk.tl2.."
+
     @Test
     fun `TL2 file names must begin with TL2`() {
         projectScope
             .classesAndInterfacesAndObjects(false)
-            .withPackage("com.vk.tl2..")
+            .withPackage(tl2Package)
             .assertTrue { it.hasNameStartingWith("TL2") }
     }
 
@@ -22,8 +25,8 @@ class TL2ArchitectureTest {
     fun `TL1 and TL2 must not have dependencies on each others`() {
         projectScope
             .assertArchitecture {
-                val tl1 = Layer("TL1", "com.vk.tl2..")
-                val tl2 = Layer("TL2", "com.vk.tlschema..")
+                val tl1 = Layer("TL1", tl2Package)
+                val tl2 = Layer("TL2", tl1Package)
 
                 listOf(tl1, tl2).dependsOnNothing()
             }
