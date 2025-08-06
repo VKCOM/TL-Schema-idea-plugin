@@ -73,9 +73,6 @@
         <lang.commenter language="TL2" implementationClass="com.vk.tl2.TL2Commenter"/>
 
         <!-- Inspection -->
-        <localInspection shortName="tl2.NumberSizeInspection" displayName="Number size"
-                         groupName="TL2" enabledByDefault="true" level="ERROR" language="TL2"
-                         implementationClass="com.vk.tl2.inspections.TL2NumberSizeInspection"/>
 
         <!-- Refactoring -->
 

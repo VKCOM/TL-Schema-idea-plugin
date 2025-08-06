@@ -13,12 +13,46 @@
   tokenTypeClass="com.vk.tl2.psi.TL2TokenType"
 
   tokens = [
-    COMMA        =  ','
-
+    COMMA  =  ','
+    SCL = ';'
+    AT = '@'
+    DOT = '.'
+    CL = ':'
+    FUNEQ = "=>"
+    EQ = '='
+    LTS = '<'
+    GTS = '>'
+    LSB = '['
+    RSB = ']'
+    VB = '|'
+    QM = '?'
+    USC = '_'
     LINE_COMMENT = 'LINE_COMMENT'
   ]
 }
 
-TL2File ::= integer*
+TL2File ::= Combinator*
+Combinator ::= Annotation* (TypeDeclaration | FuncDeclaration) SCL
 
-integer ::= (INT_NUMBER (COMMA INT_NUMBER)*)
+FuncDeclaration ::= TypeName CRC32 Field* FUNEQ TypeDefinition?
+TypeDeclaration ::= TypeName (LTS TypeTemplate (COMMA TypeTemplate)* GTS)? CRC32? EQ TypeDefinition?
+
+// todo 0 fields
+TypeDefinition ::= Field+ | TypeRef | UnionType | Field*
+
+UnionType ::= VB? UnionConstructor (VB UnionConstructor)*
+// todo 0 fields
+UnionConstructor ::= UC_NAME (Field+ | TypeRef | Field*)
+
+Field ::= ((LC_NAME QM?) | USC) CL TypeRef
+
+TypeRef ::= TypeApplication | BracketType
+
+TypeApplication ::= TypeName (LTS TypeArgument (COMMA TypeArgument)* GTS)?;
+BracketType ::= LSB TypeArgument? RSB TypeRef;
+
+TypeArgument ::= TypeRef | INT_NUMBER;
+TypeTemplate ::= LC_NAME CL LC_NAME;
+
+TypeName ::= (LC_NAME DOT)? LC_NAME;
+Annotation ::= AT LC_NAME;
