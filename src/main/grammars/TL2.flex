@@ -24,7 +24,7 @@ import static com.vk.tl2.psi.TL2Types.*;
 %unicode
 
 WHITE_SPACE=\s+
-INT_NUMBER = [1-9][0-9_]*
+INT_NUMBER = (0 | [1-9][0-9]*)
 LC_NAME = [a-z][a-zA-Z0-9_]*
 UC_NAME = [A-Z][a-zA-Z0-9_]*
 CRC32 = #[0-9a-f]{8}

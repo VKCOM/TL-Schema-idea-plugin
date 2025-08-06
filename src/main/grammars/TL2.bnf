@@ -27,6 +27,7 @@
     VB = '|'
     QM = '?'
     USC = '_'
+    LINE_COMMENT = 'LINE_COMMENT'
   ]
 }
 
