@@ -18,6 +18,9 @@ enum class TL2HighlightingColors(humanName: String, default: TextAttributesKey) 
 
     USC("Underscore", CodeInsightColors.NOT_USED_ELEMENT_ATTRIBUTES),
 
+    FUNC_DECLARATION("Func Declaration", Default.CLASS_NAME),
+    TYPE_DECLARATION("Type Declaration", Default.CLASS_NAME),
+
     LC_NAME("LC Name", Default.NUMBER),
     UC_NAME("UC Name", Default.FUNCTION_DECLARATION),
     ;

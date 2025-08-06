@@ -68,6 +68,7 @@
 
         <!-- Syntax Highlighter -->
         <lang.syntaxHighlighter language="TL2" implementationClass="com.vk.tl2.highlighter.TL2SyntaxHighlighter"/>
+        <annotator language="TL2" implementationClass="com.vk.tl2.highlighter.TL2ColorAnnotator"/>
 
         <!-- Commenter -->
         <lang.commenter language="TL2" implementationClass="com.vk.tl2.TL2Commenter"/>

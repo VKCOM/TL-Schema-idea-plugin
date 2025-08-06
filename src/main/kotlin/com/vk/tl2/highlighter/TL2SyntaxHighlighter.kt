@@ -13,7 +13,7 @@ class TL2SyntaxHighlighter : SyntaxHighlighterBase() {
 
     override fun getTokenHighlights(tokenType: IElementType?): Array<TextAttributesKey> {
 
-        println(tokenType.toString() + " " + tokenType?.debugName)
+//        println(tokenType.toString() + " " + tokenType?.debugName)
         return pack(map(tokenType)?.textAttributesKey)
     }
 
@@ -22,11 +22,12 @@ class TL2SyntaxHighlighter : SyntaxHighlighterBase() {
             TL2Types.CRC32 -> TL2HighlightingColors.CRC32
             TL2Types.ANNOTATION -> TL2HighlightingColors.ANNOTATION
             TL2Types.USC -> TL2HighlightingColors.USC
+            TL2Types.UC_NAME -> TL2HighlightingColors.UC_NAME
+
 
 
             // old
-            TL2Types.LC_NAME -> TL2HighlightingColors.LC_NAME
-            TL2Types.UC_NAME -> TL2HighlightingColors.UC_NAME
+//            TL2Types.LC_NAME -> TL2HighlightingColors.LC_NAME
 
 
 
