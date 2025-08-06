@@ -28,6 +28,7 @@ INT_NUMBER = (0 | [1-9][0-9]*)
 LC_NAME = [a-z][a-zA-Z0-9_]*
 UC_NAME = [A-Z][a-zA-Z0-9_]*
 CRC32 = #[0-9a-f]{8}
+AT = @
 
 LINE_COMMENT = "//" [^\r\n]*
 
@@ -35,7 +36,6 @@ LINE_COMMENT = "//" [^\r\n]*
 <YYINITIAL> {
     ","             { return COMMA; }
   	";"				{ return SCL; }
-  	"@"				{ return AT; }
   	"."				{ return DOT; }
   	":"				{ return CL; }
   	"=>"			{ return FUNEQ; }
@@ -59,6 +59,8 @@ LINE_COMMENT = "//" [^\r\n]*
   {UC_NAME}                     { return UC_NAME; }
 
   {CRC32}                       { return CRC32; }
+
+  {AT} {LC_NAME}*            { return ANNOTATION; }
 
 }
 

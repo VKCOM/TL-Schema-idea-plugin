@@ -15,7 +15,6 @@
   tokens = [
     COMMA  =  ','
     SCL = ';'
-    AT = '@'
     DOT = '.'
     CL = ':'
     FUNEQ = "=>"
@@ -28,11 +27,12 @@
     QM = '?'
     USC = '_'
     LINE_COMMENT = 'LINE_COMMENT'
+    ANNOTATION = 'ANNOTATION'
   ]
 }
 
 TL2File ::= Combinator*
-Combinator ::= Annotation* (TypeDeclaration | FuncDeclaration) SCL
+Combinator ::= ANNOTATION* (TypeDeclaration | FuncDeclaration) SCL
 
 FuncDeclaration ::= TypeName CRC32 Field* FUNEQ TypeDefinition?
 TypeDeclaration ::= TypeName (LTS TypeTemplate (COMMA TypeTemplate)* GTS)? CRC32? EQ TypeDefinition?
@@ -55,4 +55,3 @@ TypeArgument ::= TypeRef | INT_NUMBER;
 TypeTemplate ::= LC_NAME CL LC_NAME;
 
 TypeName ::= (LC_NAME DOT)? LC_NAME;
-Annotation ::= AT LC_NAME;
