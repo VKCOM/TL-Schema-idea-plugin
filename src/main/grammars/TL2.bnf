@@ -13,7 +13,9 @@
   tokenTypeClass="com.vk.tl2.psi.TL2TokenType"
 
   tokens = [
-    COMMA  =  ','
+    COMMA        =  ','
+
+    LINE_COMMENT = 'LINE_COMMENT'
   ]
 }
 
