@@ -16,7 +16,7 @@ class TL2ArchitectureTest {
     @Test
     fun `TL2 file names must begin with TL2`() {
         projectScope
-            .classesAndInterfacesAndObjects(false)
+            .classesAndInterfacesAndObjects(includeNested = false)
             .withPackage(tl2Package)
             .assertTrue { it.hasNameStartingWith("TL2") }
     }
@@ -25,8 +25,8 @@ class TL2ArchitectureTest {
     fun `TL1 and TL2 must not have dependencies on each others`() {
         projectScope
             .assertArchitecture {
-                val tl1 = Layer("TL1", tl2Package)
-                val tl2 = Layer("TL2", tl1Package)
+                val tl1 = Layer("TL1", tl1Package)
+                val tl2 = Layer("TL2", tl2Package)
 
                 listOf(tl1, tl2).dependsOnNothing()
             }
