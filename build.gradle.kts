@@ -179,4 +179,8 @@ tasks {
     wrapper {
         gradleVersion = providers.gradleProperty("gradleVersion").get()
     }
+
+    buildPlugin {
+        archiveBaseName.set("tl-schema-support")
+    }
 }
