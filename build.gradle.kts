@@ -11,6 +11,7 @@ plugins {
     alias(libs.plugins.changelog) // Gradle Changelog Plugin
     alias(libs.plugins.kover) // Gradle Kover Plugin
     alias(libs.plugins.grammarkit) // Gradle Grammar-Kit Plugin
+    id("com.dorongold.task-tree") version "4.0.1"
 }
 
 group = providers.gradleProperty("pluginGroup").get()
@@ -165,7 +166,7 @@ tasks {
 
     generateParser {
         dependsOn(generateLexer)
-        mustRunAfter(generateTLSchemaParser, generateTL2Parser)
+        dependsOn(generateTLSchemaParser, generateTL2Parser)
         enabled = false
     }
 
