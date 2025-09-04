@@ -168,7 +168,11 @@ tasks {
         enabled = false
     }
 
-    withType<KotlinCompile> {
+    withType<KotlinCompile>().configureEach {
+        dependsOn(generateParser)
+    }
+
+    withType<JavaCompile>().configureEach {
         dependsOn(generateParser)
     }
 
