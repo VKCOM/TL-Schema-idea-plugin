@@ -174,6 +174,7 @@ tasks {
         dependsOn(generateParser)
     }
 
+
     withType<JavaCompile>().configureEach {
         dependsOn(generateParser)
     }
