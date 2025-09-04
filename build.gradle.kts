@@ -164,7 +164,8 @@ tasks {
     }
 
     generateParser {
-        dependsOn(generateLexer, generateTLSchemaParser, generateTL2Parser)
+        dependsOn(generateTLSchemaParser, generateTL2Parser)
+        mustRunAfter(generateLexer)
         enabled = false
     }
 
