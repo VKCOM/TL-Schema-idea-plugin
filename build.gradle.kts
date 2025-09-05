@@ -132,6 +132,7 @@ val generateTLSchemaLexer = tasks.register<GenerateLexerTask>("generateTLSchemaL
 }
 
 val generateTLSchemaParser = tasks.register<GenerateParserTask>("generateTLSchemaParser") {
+    dependsOn(generateTLSchemaLexer)
     sourceFile.set(file("src/main/grammars/TLSchema.bnf"))
     targetRootOutputDir.set(generatedSourceDir)
     pathToParser.set("/com/vk/tlschema/parser/TLSchemaParser.java")
@@ -146,6 +147,7 @@ val generateTL2Lexer = tasks.register<GenerateLexerTask>("generateTL2Lexer") {
 }
 
 val generateTL2Parser = tasks.register<GenerateParserTask>("generateTL2Parser") {
+    dependsOn(generateTL2Lexer)
     sourceFile.set(file("src/main/grammars/TL2.bnf"))
     targetRootOutputDir.set(generatedSourceDir)
     pathToParser.set("/com/vk/tl2/parser/TL2Parser.java")
@@ -164,7 +166,7 @@ tasks {
     }
 
     generateParser {
-        dependsOn(generateLexer, generateTLSchemaParser, generateTL2Parser)
+        dependsOn(generateTLSchemaParser, generateTL2Parser)
         enabled = false
     }
 
