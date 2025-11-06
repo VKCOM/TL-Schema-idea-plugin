@@ -4,6 +4,7 @@ import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElementResolveResult;
+import com.intellij.psi.PsiFile;
 import com.intellij.psi.ResolveResult;
 import com.vk.tlschema.TLSchemaIcons;
 import com.vk.tlschema.psi.TLSchemaLcIdentNs;
@@ -30,7 +31,8 @@ public class TLSchemaLcIdentNsReference extends TLSchemaNamedElementReferenceBas
             return resultsArray;
         }
         Project project = myElement.getProject();
-        List<TLSchemaLcIdentNs> idents = TLSchemaSearchUtils.findLcIdents(project, myName);
+        PsiFile file = myElement.getContainingFile();
+        List<TLSchemaLcIdentNs> idents = TLSchemaSearchUtils.findLcIdents(project, file, myName);
         List<ResolveResult> results = new ArrayList<>();
         for (TLSchemaLcIdentNs ident : idents) {
             results.add(new PsiElementResolveResult(ident));
@@ -42,7 +44,8 @@ public class TLSchemaLcIdentNsReference extends TLSchemaNamedElementReferenceBas
     @Override
     public Object[] getVariants() {
         Project project = myElement.getProject();
-        List<TLSchemaLcIdentNs> idents = TLSchemaSearchUtils.findLcIdents(project);
+        PsiFile file = myElement.getContainingFile();
+        List<TLSchemaLcIdentNs> idents = TLSchemaSearchUtils.findLcIdents(project, file);
         List<Object> variants = new ArrayList<>(Arrays.asList(varIdentReference.getVariants()));
         for (final TLSchemaLcIdentNs ident : idents) {
             variants.add(LookupElementBuilder.create(ident).

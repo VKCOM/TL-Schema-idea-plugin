@@ -153,12 +153,16 @@ public class TLSchemaAnnotator implements Annotator {
         String type = ident.getText();
         TextRange range = ident.getTextRange();
         boolean bare = false;
-        TLSchemaLcIdentNs combinator = TLSchemaSearchUtils.findCombinator(ident.getProject(), type);
+        TLSchemaLcIdentNs combinator = TLSchemaSearchUtils.findCombinator(
+                ident.getProject(),
+                ident.getContainingFile(),
+                type
+        );
         if (combinator != null) {
             bare = true;
             type = combinator.getDeclaration().getResultType().getBoxedTypeIdent().getText();
         }
-        List<TLSchemaResultType> cons = TLSchemaSearchUtils.findType(ident.getProject(), type);
+        List<TLSchemaResultType> cons = TLSchemaSearchUtils.findType(ident.getProject(), ident.getContainingFile(), type);
         boolean is_simple_type = cons.size() == 1;
         if (is_simple_type) {
             TLSchemaResultType resultType = cons.get(0);

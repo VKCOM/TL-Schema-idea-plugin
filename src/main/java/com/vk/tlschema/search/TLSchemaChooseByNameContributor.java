@@ -17,9 +17,9 @@ public class TLSchemaChooseByNameContributor implements ChooseByNameContributor 
     @Override
     public String[] getNames(Project project, boolean includeNonProjectItems) {
         List<String> result = new ArrayList<>();
-        result.addAll(TLSchemaSearchUtils.findUcIdents(project).stream().map(TLSchemaUcIdentNs::getName).collect(Collectors.toList()));
-        result.addAll(TLSchemaSearchUtils.findLcIdents(project).stream().map(TLSchemaLcIdentNs::getName).collect(Collectors.toList()));
-        result.addAll(TLSchemaSearchUtils.findVarIdents(project).stream().map(TLSchemaVarIdent::getName).collect(Collectors.toList()));
+        result.addAll(TLSchemaSearchUtils.findUcIdents(project, null).stream().map(TLSchemaUcIdentNs::getName).collect(Collectors.toList()));
+        result.addAll(TLSchemaSearchUtils.findLcIdents(project, null).stream().map(TLSchemaLcIdentNs::getName).collect(Collectors.toList()));
+        result.addAll(TLSchemaSearchUtils.findVarIdents(project, null).stream().map(TLSchemaVarIdent::getName).collect(Collectors.toList()));
         return result.toArray(new String[result.size()]);
     }
 
@@ -27,9 +27,9 @@ public class TLSchemaChooseByNameContributor implements ChooseByNameContributor 
     @Override
     public NavigationItem[] getItemsByName(String name, String pattern, Project project, boolean includeNonProjectItems) {
         List<NavigationItem> result = new ArrayList<>();
-        result.addAll(TLSchemaSearchUtils.findUcIdents(project, name));
-        result.addAll(TLSchemaSearchUtils.findLcIdents(project, name));
-        result.addAll(TLSchemaSearchUtils.findVarIdents(project, name));
+        result.addAll(TLSchemaSearchUtils.findUcIdents(project, null, name));
+        result.addAll(TLSchemaSearchUtils.findLcIdents(project, null, name));
+        result.addAll(TLSchemaSearchUtils.findVarIdents(project, null, name));
         return result.toArray(new NavigationItem[result.size()]);
     }
 }
