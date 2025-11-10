@@ -21,8 +21,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class TLSchemaSearchUtils {
-    private static final String COMBINED_TL_FILE = "combined.tl";
-
     public static List<TLSchemaResultType> findType(Project project, PsiFile file, String key) {
         List<TLSchemaResultType> result = null;
         Collection<VirtualFile> virtualFiles = findFilesFromContext(project, file);
@@ -214,7 +212,7 @@ public class TLSchemaSearchUtils {
             return List.of();
         }
 
-        if (file.getName().equals(COMBINED_TL_FILE)) {
+        if (isCombinedFile(file.getName())) {
             return List.of(file.getVirtualFile());
         }
 
@@ -226,7 +224,7 @@ public class TLSchemaSearchUtils {
         FileTypeIndex.processFiles(
                 TLSchemaFileType.INSTANCE,
                 (file) -> {
-                    if (file.getName().equals(COMBINED_TL_FILE)) {
+                    if (isCombinedFile(file.getName())) {
                         return true;
                     }
 
@@ -237,5 +235,9 @@ public class TLSchemaSearchUtils {
         );
 
         return result;
+    }
+
+    private static boolean isCombinedFile(@NotNull String fileName) {
+        return fileName.startsWith("combined");
     }
 }
