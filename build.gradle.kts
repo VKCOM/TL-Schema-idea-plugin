@@ -47,6 +47,9 @@ dependencies {
         // Plugin Dependencies. Uses `platformPlugins` property from the gradle.properties file for plugin from JetBrains Marketplace.
         plugins(providers.gradleProperty("platformPlugins").map { it.split(',') })
 
+        // Module Dependencies. Uses `platformBundledModules` property from the gradle.properties file for bundled IntelliJ Platform modules.
+        bundledModules(providers.gradleProperty("platformBundledModules").map { it.split(',') })
+
         testFramework(TestFrameworkType.Platform)
     }
 }
@@ -80,12 +83,6 @@ intellijPlatform {
 
         ideaVersion {
             sinceBuild = providers.gradleProperty("pluginSinceBuild")
-
-            // We want to support all future versions, so we need to use a null provider here.
-            // Without this, we cannot pass the `Plugin Verifier`.
-            val pluginUntilBuild = providers.gradleProperty("pluginUntilBuild")
-                .takeUnless { it.orNull.isNullOrBlank() } ?: provider { null }
-            untilBuild = pluginUntilBuild
         }
     }
 
