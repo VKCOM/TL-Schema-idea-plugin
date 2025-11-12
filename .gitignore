@@ -3,5 +3,6 @@
 .idea
 .intellijPlatform
 .kotlin
+.qodana
 build
 src/main/gen
