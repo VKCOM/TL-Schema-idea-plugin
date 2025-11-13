@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## 1.6.0 — 13.11.2025
+
+- Special method for processing the `combined.tl` file
+- Alpha version support `TL2`
+
 ## 1.5.0 — 14.07.2025
 
 - Added the **first** tests
