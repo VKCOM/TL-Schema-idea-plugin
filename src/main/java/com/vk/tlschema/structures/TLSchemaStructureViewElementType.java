@@ -24,7 +24,7 @@ public class TLSchemaStructureViewElementType implements StructureViewTreeElemen
 
     public TLSchemaStructureViewElementType(Project project, String type) {
         this.type = type;
-        List<TLSchemaResultType> decls = TLSchemaSearchUtils.findType(project, type);
+        List<TLSchemaResultType> decls = TLSchemaSearchUtils.findType(project, null, type);
         List<TLSchemaLcIdentNs> combinators = new ArrayList<>();
         for (TLSchemaResultType decl : decls) {
             if (decl.getDeclaration().getCombinator() != null) {
