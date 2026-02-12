@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## 1.6.1 — 12.02.2026
+
+- Fix crashes on older IDEs 
+
 ## 1.6.0 — 13.11.2025
 
 - Special method for processing the `combined.tl` file
